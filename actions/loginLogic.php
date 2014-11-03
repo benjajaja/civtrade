@@ -1,5 +1,15 @@
 <?php
 require('/var/www/civ/other/req.php');
+//Sleep for security purposes
+sleep(1);
+//Random alphanumb generator
+
+$rnd = '';
+$characters = "abcdefghijklmnopqrstuvwxyz0123456789";
+for ($i = 0; $i < 12; $i++) {
+  $rnd .= $characters[rand(0, strlen($characters) - 1)];
+}
+
 //Login part
 if ($_GET['type'] == 'login')
 {
@@ -51,7 +61,6 @@ else if ($_GET['type'] == 'signup') {
         }
         if ($exists == false) {        
         //Create account
-            $passID = rand(10000,99999);
             $confCode = rand(10000,99999);
 			/*$query = "INSERT INTO users (name,level,passhash,passid,verified,rep,confcode) VALUES 
             ('".$_POST['user']."',
@@ -61,14 +70,14 @@ else if ($_GET['type'] == 'signup') {
             'n',
              0,
              ".$confCode.");";*/
-            $query = "INSERT INTO users (name,level,passhash,passid,verified,rep,confcode) VALUES (?, 1, ?, ".$passID.", 'n', 0, ".$confCode.");";
+            $query = "INSERT INTO users (name,level,passhash,passid,verified,rep,confcode) VALUES (?, 1, ?, ".$rnd.", 'n', 0, ".$confCode.");";
 			$stmt = mysqli_stmt_init($con);
 			$stmt->prepare($query);
 			$newPass = password_hash($_POST['pass'], PASSWORD_DEFAULT);
 			$stmt->bind_param('ss', $_POST['user'], $newPass);
 			$stmt->execute();
             setcookie("user", $_POST['user'], time()+86400, "/", $url);
-            setcookie("userID", $passID, time()+86400, "/", $url);
+            setcookie("userID", $rnd, time()+86400, "/", $url);
             errorOut("Successfully logged in", "success", "/control");
         }
 	}
@@ -83,7 +92,6 @@ else if ($_GET['type'] == 'changepw') {
     if (strlen($_POST['newPass']) >= 8)
     {
         if ($_POST['newPass'] == $_POST['newPassConf']) {
-            $passID = rand(10000,99999);
             $newPass = password_hash($_POST['newPass'], PASSWORD_DEFAULT);
 			//Update pass
             $query = "UPDATE users SET passhash= ? WHERE name= ?";
@@ -96,9 +104,9 @@ else if ($_GET['type'] == 'changepw') {
             $query = "UPDATE users SET passid= ? WHERE name= ?";
 			$stmt = mysqli_stmt_init($con);
 			$stmt->prepare($query);
-			$stmt->bind_param('ss', $passID, $_COOKIE['user']);
+			$stmt->bind_param('ss', $rnd, $_COOKIE['user']);
 			$stmt->execute();
-            setcookie("userID", $passID, time()+86400, "/", $url);
+            setcookie("userID", $rnd, time()+86400, "/", $url);
             errorOut("Successfully updated your password!", "success", "/control");
         }
         else {

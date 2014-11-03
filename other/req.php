@@ -2,13 +2,13 @@
 
 //URL - Set the BASE URL here. This includes ALL SUBDOMAINS.
 //Example: $url = "coolsite.freewebhosting.com";
-$url = $url;
+$url = "civtrade.com";
 
 //SQL Connection initlization 
 
 //HOST is usually 'localhost' with a VPS, if cPanel you'll USUALLY get an IP
 //Example: $con = mysqli_connect('localhost', 'notRoot', 'password123', 'civ');
-$con = mysqli_connect('HOST','USERNAME','PASSWORD','DATABASE_NAME');
+$con = mysqli_connect('HOST', 'USERNAME', 'PASSWORD', 'DATABASE_NAME');
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                      //
@@ -19,6 +19,43 @@ $con = mysqli_connect('HOST','USERNAME','PASSWORD','DATABASE_NAME');
 //                     https://github.com/minicl55/civtrade                             //
 //                                                                                      //
 //////////////////////////////////////////////////////////////////////////////////////////
+
+//CheckLogin
+
+if (isset($_COOKIE['user']))
+{
+    $userid = $_COOKIE['userID'];
+    $query = "SELECT passid FROM users WHERE name=?";
+    $stmt = mysqli_stmt_init($con);
+    $stmt->prepare($query);
+    $stmt->bind_param('s', $_COOKIE['user']);
+    $stmt->execute();
+    $result2=$stmt->get_result();
+    $storedid = mysqli_fetch_row($result2)[0];
+    if ($userid != $storedid)
+    {
+        setcookie("user", "", time()-360000, "/", "http://".$url);
+        setcookie("userID", "", time()-3600000, "/", "http://".$url);
+        unset($_COOKIE['user']);
+        unset($_COOKIE['userID']);
+        die(errorOut("Your session has expired so you have been logged out", "danger"));
+    }
+}
+
+//Fake a 404 page
+function fake404() {
+    echo '<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+    <html><head>
+    <title>404 Not Found</title>
+    </head><body>
+    <h1>Not Found</h1>
+    <p>The requested URL /'.basename($_SERVER['PHP_SELF']).' was not found on this server.</p>
+    <hr>
+    <address>Apache/2.2.22 (Debian) Server at civtrade.com Port 80</address>
+    </body></html>
+    ';
+    die (http_response_code(404));
+}
 
 //Level
 if (isset($_COOKIE['user'])) {
@@ -42,32 +79,11 @@ else {
     $level = 0;
 }
 
-//CheckLogin
-
-if (isset($_COOKIE['user']))
-{
-    $userid = $_COOKIE['userID'];
-    $query = "SELECT passid FROM users WHERE name=?";
-    $stmt = mysqli_stmt_init($con);
-    $stmt->prepare($query);
-    $stmt->bind_param('s', $_COOKIE['user']);
-    $stmt->execute();
-    $result2=$stmt->get_result();
-    $storedid = mysqli_fetch_row($result2)[0];
-    if (!$userid == $storedid)
-    {
-        setcookie("user", "", time()-360000, "/", $url);
-        setcookie("userID", "", time()-3600000, "/", $url);
-        unset($_COOKIE['user']);
-        unset($_COOKIE['userID']);
-        errorOut("Your session has expired so you have been logged out", "warning");
-    }
-}
-
 //echo top
 
+header("Access-Control-Allow-Origin: *");
 echo '<link rel="stylesheet" type="text/css" href="http://'.$url.'/other/stylenew.css?59">
-<head><title>CivTrade! Today: User settings!</title></head><body class="body">
+<head><title>CivTrade!</title></head><body class="body">
 <script src="http://code.jquery.com/jquery.js"></script>
 <script src="http://'.$url.'/other/bootstrap.js"></script>
 <nav class="navbar navbar-fixed-top '.$whiteNav.'" role="navigation">
@@ -103,11 +119,18 @@ echo '<link rel="stylesheet" type="text/css" href="http://'.$url.'/other/stylene
   </div><!-- /.container-fluid -->
 </nav>';
 
+//Open source!
+
+if (!isset($_GET['note'])) {
+    echo '<div align="center" class="alert alert-info alert-dismissible" role="alert"><b>CivTrade is now open source!</b> <a href="https://github.com/minicl55/civtrade">Click here to check it out!</a></div>';
+}
+
 //ErrorOut()
 
 function errorOut($error, $type = "info", $rel = "/")
 {
-    header( "Location: http://".$url.$rel."?note=".$error.'&type='.$type);
+    $url = "civtrade.com";
+    header("Location: http://".$url.$rel."?note=".$error.'&type='.$type);
 	exit;
 }
 
@@ -137,12 +160,6 @@ echo '<script language="JavaScript" type="text/javascript">
     top.location.href = document.location.href ;
   }</script>
 ';
-
-//Old domain
-
-if ($_SERVER['SERVER_NAME'] == 'chipperyman.com') {
-    echo '<div align="center" class="alert alert-danger" role="alert">You\'re accessing CivTrade through the old URL. <b>Links are broken and site functionality <u>will</u> break.</b> You should consider using the <a href="http://'.$url.'">new URL</a> from now on.</div>';
-}
 
 //IE
 

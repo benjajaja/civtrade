@@ -150,7 +150,9 @@ while ($row = $result->fetch_assoc()) {
         }
         //Echo post info
         //echo 'Offer ID: '.$row['offerid'].', posted '.date("d", $diff).' '.$dayString.' and '.date("H", $diff).' '.$hourString.' ago';
-		echo 'Offer ID: '.$row['offerid'].', posted '.$row['creation'];
+        
+        //Hour:Minute Month/day/year
+		echo 'Offer ID: '.$row['offerid'].', posted '.date("H:i m/d/y", strtotime($row['creation']));
         echo '<div class="panel-heading"><font size="5">'.$row['poster'].' (<a  style="color: #66CD00;" href="./actions/viewrep.php?user='.$row['poster'].'">'.$userInfo['rep'].' rep</a> - '.$verifiedText.')</font></div>
         <div class="panel-body">';
         
@@ -171,6 +173,10 @@ while ($row = $result->fetch_assoc()) {
         //Echo out location and notes
         echo '<b>Location:</b> '.$row['location'].'<br>
         <b>Notes:</b> '.$row['notes'].'<br>';
+        
+        //Link directly to the post
+        
+        echo '<a href="http://'.$url.'/?id='.$row['offerid'].'"><button type="button" class="btn btn-info">Direct link</button></a> ';
         
         //If they're logged in...
         if (isset($_COOKIE['user'])) {
