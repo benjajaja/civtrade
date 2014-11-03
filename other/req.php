@@ -8,7 +8,7 @@ $url = "civtrade.com";
 
 //HOST is usually 'localhost' with a VPS, if cPanel you'll USUALLY get an IP
 //Example: $con = mysqli_connect('localhost', 'notRoot', 'password123', 'civ');
-$con = mysqli_connect('HOST', 'USERNAME', 'PASSWORD', 'DATABASE_NAME');
+$con = mysqli_connect('HOST', 'USER', 'PASS', 'DATABASE');
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                      //
@@ -34,8 +34,8 @@ if (isset($_COOKIE['user']))
     $storedid = mysqli_fetch_row($result2)[0];
     if ($userid != $storedid)
     {
-        setcookie("user", "", time()-360000, "/", "http://".$url);
-        setcookie("userID", "", time()-3600000, "/", "http://".$url);
+        setcookie("user", "", time()-360000, "/", $url);
+        setcookie("userID", "", time()-3600000, "/", $url);
         unset($_COOKIE['user']);
         unset($_COOKIE['userID']);
         die(errorOut("Your session has expired so you have been logged out", "danger"));
@@ -85,7 +85,7 @@ header("Access-Control-Allow-Origin: *");
 echo '<link rel="stylesheet" type="text/css" href="http://'.$url.'/other/stylenew.css?59">
 <head><title>CivTrade!</title></head><body class="body">
 <script src="http://code.jquery.com/jquery.js"></script>
-<script src="http://'.$url.'/other/bootstrap.js"></script>
+<script src="'.$url.'/other/bootstrap.js"></script>
 <nav class="navbar navbar-fixed-top '.$whiteNav.'" role="navigation">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -107,8 +107,11 @@ echo '<link rel="stylesheet" type="text/css" href="http://'.$url.'/other/stylene
       </ul>';
         if (isset($_COOKIE['user'])) {
             echo '<ul class="nav navbar-nav">
-            <li><a href="/actions/loginLogic.php?type=logout">Log out</a></li>
-            </ul>';
+			<li><a href="../?showOwnDisabled">Show your disabled posts</a></li>';
+			if ($level == 3) { 
+				echo '<li><a href="../?showAllDisabled">Show all disabled posts</a></li>';
+			}
+            echo '<li><a href="/actions/loginLogic.php?type=logout">Log out of '.$_COOKIE['user'].'</a></li></ul>';
         }
         else {
             echo '<ul class="nav navbar-nav">
@@ -129,8 +132,8 @@ if (!isset($_GET['note'])) {
 
 function errorOut($error, $type = "info", $rel = "/")
 {
-    $url = "civtrade.com";
-    header("Location: http://".$url.$rel."?note=".$error.'&type='.$type);
+    $url = "http://civtrade.com";
+    header("Location: ".$url.$rel."?note=".$error.'&type='.$type);
 	exit;
 }
 

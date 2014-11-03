@@ -5,13 +5,6 @@ require('/var/www/civ/other/req.php');
 if (!isset($_COOKIE['user'])) {
     redir('login.php');
 }
-/*
-if ($_COOKIE['user'] == 'dx_dt' or $_COOKIE['user'] == 'minicl55') {
-	 echo '<div class="panelControl panel-warning">
-    <div class="panel-heading"><font size="5">The following files are avaible for you to download:</font></div>
-        <a href="./spigot.jar">Spigot.jar</a><br>
-    </div>';
-}*/
 
 //Create new post
 
@@ -57,22 +50,6 @@ echo '<div class="panel-body"><form method="POST" class="form-inline;" action=".
 	</form>
 </div></div></div>';
     
-   
-//Give rep
-
-echo '<div class="panelControl panel-info">
-<div class="panel-heading"><font size="5">Give rep to another user</font></div>
-<form style="padding:1%" method="POST" class="form-inline;" action="../actions/giverep.php"> <div class="form-group"> 
-<div class="form-group"><input type="text" class="form-control" name="user" placeholder="Their username"></div> 
-<div class="form-group"><input type="text" class="form-control" name="reason" placeholder="Reason"></div>';
-if ($userInfo['verified'] == 'y') {
-	echo '<button type="submit" class="btn btn-info">Submit</button></form>';
-}
-else {
-	echo '<button type="submit" class="btn btn-info" disabled>You must be verified to give reputation</button></form>';
-}
-echo '</div></div>';
-   
 //Edit user information
 
 $query = "SELECT * FROM users WHERE name= ?";
@@ -87,23 +64,16 @@ $row = mysqli_fetch_assoc($result2);
 if ($row['relativetime'] == 1) { $useRel = "checked"; } else { $useRel = null; }
 if ($row['whitenav'] == 1) { $useWhite = "checked"; } else { $useWhite = null; }
 if ($row['defaultsearch'] == 0) { $useDefault = " checked"; } else { $useDefault = null; }
-echo '<div class="panelControl panel-primary">
-    <div class="panel-heading"><font size="5">View and edit user information</font></div>
-        <div style="padding:1%">You are logged in as '.$_COOKIE['user'].' and have <a href="../actions/viewrep.php?user='.$_COOKIE['user'].'">'.$row['rep'].'</a> reputation. <a href="../actions/viewrep.php">View all reputation</a><br>
-        <a href="../?showOwnDisabled">Show your disabled posts</a><br>';
-        if ($level == 3)
-        {
-            echo '<a href="../?showAllDisabled">Show all disabled posts</a><br>';
-        }
+echo '<div class="panelControl panel-info">
+    <div class="panel-heading"><font size="5">View and edit user information (Soon: User-specific settings)</font></div><br>';
 		//User options
 		if ($level == 3) {
-		echo '<hr style="border-color:#000000; background-color:#000000; color:#000000;"/> <!-- Oh my god so many standards -->';
 		echo '<form method="POST" action="../actions/loginLogic.php?type=updateSettings" class="form-inline;">
 			<input type="checkbox" checked name="relativetime"> Use relative timestamps</input><br>
 			<input type="checkbox" checked name="whtienav"> Use white navbar</input><br> 
 			<input type="checkbox"'.$useDefault.' name="defaultsearch"> Put search in navbar (Warning: Ugly and gross)</input><br>
 			<br><button type="submit" class="btn btn-info">Submit</button>
-			</form><hr style="border-color:#000000; background-color:#000000; color:#000000;"/>';
+			</form><hr style="border-color:#000000; background-color:#000000; color:#000000;"/> <!-- Oh my god so many standards -->';
 		}
         echo '<form method="POST" class="form-inline;" action="../actions/loginLogic.php?type=changepw"> <div class="form-group"> 
             <div class="form-group"><input type="password" class="form-control" name="newPass" placeholder="New password"></div> 

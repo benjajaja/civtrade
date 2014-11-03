@@ -153,7 +153,8 @@ while ($row = $result->fetch_assoc()) {
         
         //Hour:Minute Month/day/year
 		echo 'Offer ID: '.$row['offerid'].', posted '.date("H:i m/d/y", strtotime($row['creation']));
-        echo '<div class="panel-heading"><font size="5">'.$row['poster'].' (<a  style="color: #66CD00;" href="./actions/viewrep.php?user='.$row['poster'].'">'.$userInfo['rep'].' rep</a> - '.$verifiedText.')</font></div>
+        //echo '<div class="panel-heading"><font size="5">'.$row['poster'].' (<a  style="color: #66CD00;" href="./actions/viewrep.php?user='.$row['poster'].'">'.$userInfo['rep'].' rep</a> - '.$verifiedText.')</font></div>
+        echo '<div class="panel-heading"><font size="5">'.$row['poster'].' ('.$verifiedText.')</font></div>
         <div class="panel-body">';
         
         //Replace 0 with ???

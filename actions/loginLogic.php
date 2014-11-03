@@ -1,7 +1,5 @@
 <?php
 require('/var/www/civ/other/req.php');
-//Sleep for security purposes
-sleep(1);
 //Random alphanumb generator
 
 $rnd = '';
@@ -13,6 +11,8 @@ for ($i = 0; $i < 12; $i++) {
 //Login part
 if ($_GET['type'] == 'login')
 {
+	//Sleep for security purposes
+	sleep(1);
     //Check if pass verifies
     
     //Get passhash
@@ -70,7 +70,7 @@ else if ($_GET['type'] == 'signup') {
             'n',
              0,
              ".$confCode.");";*/
-            $query = "INSERT INTO users (name,level,passhash,passid,verified,rep,confcode) VALUES (?, 1, ?, ".$rnd.", 'n', 0, ".$confCode.");";
+            $query = "INSERT INTO users (name,level,passhash,passid,verified,rep,confcode) VALUES (?, 1, ?, '".$rnd."', 'n', 0, ".$confCode.");";
 			$stmt = mysqli_stmt_init($con);
 			$stmt->prepare($query);
 			$newPass = password_hash($_POST['pass'], PASSWORD_DEFAULT);
@@ -78,6 +78,7 @@ else if ($_GET['type'] == 'signup') {
 			$stmt->execute();
             setcookie("user", $_POST['user'], time()+86400, "/", $url);
             setcookie("userID", $rnd, time()+86400, "/", $url);
+			die();
             errorOut("Successfully logged in", "success", "/control");
         }
 	}

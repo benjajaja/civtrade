@@ -31,7 +31,7 @@
 			NOW())";
 			$stmt = mysqli_stmt_init($con);
 			mysqli_stmt_prepare($stmt,$query);
-			mysqli_stmt_bind_param($stmt, "sssssss", $_COOKIE['user'], $_POST['have'], $_POST['amountWant'], $_POST['amountHave'], $_POST['want'], $_POST['notes'], $_POST['loc']);
+			mysqli_stmt_bind_param($stmt, "sssssss", $_COOKIE['user'], $_POST['have'], $_POST['amountHave'], $_POST['want'], $_POST['amountWant'], $_POST['notes'], $_POST['loc']);
 			mysqli_stmt_execute($stmt);
 			errorOut("Successfully posted your listing", "success");
 		}
