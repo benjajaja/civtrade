@@ -28,7 +28,6 @@ else if (!isset($_GET['want'])) {
     //Show all disabled
 	if (isset($_GET['showAllDisabled'])) {
         if ($level >= 2) {
-            echo '<div align="center" class="alert alert-info alert-dismissible" role="alert">Showing only disabled posts</div>';
             $query = "SELECT * FROM offers WHERE active='n' ORDER BY offerid DESC";
         }
         else {
@@ -39,8 +38,7 @@ else if (!isset($_GET['want'])) {
     //Show own disabled
     else if (isset($_GET['showOwnDisabled'])) {
         if (isset($_COOKIE['user'])) {
-            echo '<div align="center" class="alert alert-info alert-dismissible" role="alert">Showing only your disabled posts</div>';
-            $query = "SELECT * FROM offers WHERE active='n' AND poster='".$_COOKIE['user']."'ORDER BY offerid DESC";
+$query = "SELECT * FROM offers WHERE active='n' AND poster=? ORDER BY offerid DESC";
         }
         else {
             errorOut('You must login to view your own disabled posts', 'danger');
@@ -53,6 +51,7 @@ else if (!isset($_GET['want'])) {
 	}
 	$stmt = mysqli_stmt_init($con);
     $stmt->prepare($query);
+    if (isset($_GET['showOwnDisabled'])) { $stmt->bind_param('s', $_COOKIE['user']); }
     $stmt->execute();
     $result=$stmt->get_result();
 }

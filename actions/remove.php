@@ -7,7 +7,6 @@
         if (is_numeric($_GET['id'])) {
             //Logic for marking
             if ($_GET['type'] == "mark") {
-				//$query = "SELECT poster FROM offers WHERE offerid='".$_GET['id']."';";
 				$query = "SELECT poster FROM offers WHERE offerid= ?";
 				$stmt = mysqli_stmt_init($con);
 				$stmt->prepare($query);

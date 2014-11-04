@@ -8,7 +8,7 @@ $url = "civtrade.com";
 
 //HOST is usually 'localhost' with a VPS, if cPanel you'll USUALLY get an IP
 //Example: $con = mysqli_connect('localhost', 'notRoot', 'password123', 'civ');
-$con = mysqli_connect('HOST', 'USER', 'PASS', 'DATABASE');
+$con = mysqli_connect('HOST', 'USER', 'PASS', 'DATABASE_NAME');
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                      //
@@ -67,12 +67,7 @@ if (isset($_COOKIE['user'])) {
     $result2=$stmt->get_result();
     $userInfo = mysqli_fetch_assoc($result2);
 	$level = $userInfo['level'];
-	if ($userInfo['whitenav'] == 1) {
-		$whiteNav = 'navbar-default';
-	}
-	else {
-		$whiteNav = 'navbar-inverse';
-	}
+    $whiteNav = 'navbar-inverse';
 }
 else {
 	$whiteNav = 'navbar-inverse';
@@ -118,15 +113,16 @@ echo '<link rel="stylesheet" type="text/css" href="http://'.$url.'/other/stylene
             <li><a href="/control/login.php">Log in</a></li>
             </ul>';
         }
+        echo '<ul class="nav navbar-nav"><li><a href="https://github.com/minicl55/civtrade">Now open-source!</a></li></ul>';
     echo '</div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>';
 
 //Open source!
 
-if (!isset($_GET['note'])) {
+/*if (!isset($_GET['note'])) {
     echo '<div align="center" class="alert alert-info alert-dismissible" role="alert"><b>CivTrade is now open source!</b> <a href="https://github.com/minicl55/civtrade">Click here to check it out!</a></div>';
-}
+}*/
 
 //ErrorOut()
 

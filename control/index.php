@@ -60,25 +60,21 @@ $stmt->execute();
 $result2=$stmt->get_result();
 $row = mysqli_fetch_assoc($result2);
 
-//Get checkbox status
-if ($row['relativetime'] == 1) { $useRel = "checked"; } else { $useRel = null; }
-if ($row['whitenav'] == 1) { $useWhite = "checked"; } else { $useWhite = null; }
-if ($row['defaultsearch'] == 0) { $useDefault = " checked"; } else { $useDefault = null; }
 echo '<div class="panelControl panel-info">
-    <div class="panel-heading"><font size="5">View and edit user information (Soon: User-specific settings)</font></div><br>';
+    <div class="panel-heading"><font size="5">View and edit user information (Soon: User-specific settings)</font></div>';
 		//User options
 		if ($level == 3) {
-		echo '<form method="POST" action="../actions/loginLogic.php?type=updateSettings" class="form-inline;">
+		echo '<div class="panel-body"><form method="POST" action="../actions/loginLogic.php?type=updateSettings" class="form-inline;">
 			<input type="checkbox" checked name="relativetime"> Use relative timestamps</input><br>
-			<input type="checkbox" checked name="whtienav"> Use white navbar</input><br> 
-			<input type="checkbox"'.$useDefault.' name="defaultsearch"> Put search in navbar (Warning: Ugly and gross)</input><br>
+			<input type="checkbox" checked name="staticnav"> Static navbar (keep it in the same place instead of always being at the top of the page)</input><br> 
+			<input type="checkbox" checked name="closed"> I don\'t care about open-source</input><br>
 			<br><button type="submit" class="btn btn-info">Submit</button>
-			</form><hr style="border-color:#000000; background-color:#000000; color:#000000;"/> <!-- Oh my god so many standards -->';
+			</form><hr style="border-color:#000000; background-color:#000000; color:#000000;"/><!-- Oh my god so many standards -->';
 		}
         echo '<form method="POST" class="form-inline;" action="../actions/loginLogic.php?type=changepw"> <div class="form-group"> 
             <div class="form-group"><input type="password" class="form-control" name="newPass" placeholder="New password"></div> 
             <div class="form-group"><input type="password" class="form-control" name="newPassConf" placeholder="Confirm"></div> 
             <button type="submit" class="btn btn-info">Submit</button></form></div>'; 
-    echo '</div></div>';
+    echo '</div></div></div>';
    
 ?>
