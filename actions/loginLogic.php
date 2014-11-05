@@ -8,6 +8,11 @@ for ($i = 0; $i < 12; $i++) {
   $rnd .= $characters[rand(0, strlen($characters) - 1)];
 }
 
+$rndAPI = '';
+for ($i = 0; $i < 12; $i++) {
+  $rndAPI .= $characters[rand(0, strlen($characters) - 1)];
+}
+
 //Login part
 if ($_GET['type'] == 'login')
 {
@@ -70,7 +75,7 @@ else if ($_GET['type'] == 'signup') {
             'n',
              0,
              ".$confCode.");";*/
-            $query = "INSERT INTO users (name,level,passhash,passid,verified,rep,confcode) VALUES (?, 1, ?, '".$rnd."', 'n', 0, ".$confCode.");";
+            $query = "INSERT INTO users (name,level,passhash,passid,verified,rep,confcode) VALUES (?, 1, ?, '".$rnd."', 'n', 0, '".$rndAPI."');";
 			$stmt = mysqli_stmt_init($con);
 			$stmt->prepare($query);
 			$newPass = password_hash($_POST['pass'], PASSWORD_DEFAULT);
@@ -78,7 +83,6 @@ else if ($_GET['type'] == 'signup') {
 			$stmt->execute();
             setcookie("user", $_POST['user'], time()+86400, "/", $url);
             setcookie("userID", $rnd, time()+86400, "/", $url);
-			die();
             errorOut("Successfully logged in", "success", "/control");
         }
 	}

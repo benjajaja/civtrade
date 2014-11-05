@@ -1,14 +1,41 @@
 <?php
 
+//You are REQUIRED to change these settings to make your website work
+//--------------------------------------------------------------------
+
+//SQL Connection initlization 
+//HOST is usually 'localhost' with a VPS, if cPanel you'll USUALLY get an IP
+//Example: $con = mysqli_connect('localhost', 'notRoot', 'password123', 'civ');
+$con = mysqli_connect('HOST', 'USERNAME', 'PASSWORD', 'DATABASE_NAME');
+
 //URL - Set the BASE URL here. This includes ALL SUBDOMAINS.
 //Example: $url = "coolsite.freewebhosting.com";
 $url = "civtrade.com";
 
-//SQL Connection initlization 
+//OPTIONAL settings. Keeping default values will make it as close to my website as possible
+//-----------------------------------------------------------------------------------------
 
-//HOST is usually 'localhost' with a VPS, if cPanel you'll USUALLY get an IP
-//Example: $con = mysqli_connect('localhost', 'notRoot', 'password123', 'civ');
-$con = mysqli_connect('HOST', 'USER', 'PASS', 'DATABASE_NAME');
+//shouldFramebreak
+//Set this to false if you do NOT want to framebreak
+//Default: true
+$shouldFramebreak = true;
+
+//warnOnIE
+//Set this to false if you do NOT want to display a warning message when IE 8 or below connects to the website
+//WARNING: IE8 and below do NOT RENDER the website correctly as-is. It is possible to modify the website yourself to add support but it will be glitchy if you don't
+//Default: true
+$warnOnIE = true;
+
+//requireAPIToken
+//Set this to false if you do not want to require a token on API pages
+//Default: true
+$requireAPIToken = true;
+
+//logAPIRequests
+//Set this to false if you do not want to log API requests
+//Default: true
+$logAPIRequests = true;
+
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                      //
@@ -56,6 +83,7 @@ function fake404() {
     ';
     die (http_response_code(404));
 }
+
 
 //Level
 if (isset($_COOKIE['user'])) {
@@ -118,18 +146,26 @@ echo '<link rel="stylesheet" type="text/css" href="http://'.$url.'/other/stylene
   </div><!-- /.container-fluid -->
 </nav>';
 
-//Open source!
+//Check for error
 
-/*if (!isset($_GET['note'])) {
-    echo '<div align="center" class="alert alert-info alert-dismissible" role="alert"><b>CivTrade is now open source!</b> <a href="https://github.com/minicl55/civtrade">Click here to check it out!</a></div>';
-}*/
+if (isset($_COOKIE['error'])) {
+//Echo error	
+	echo '<div align="center" class="alert alert-'.$_COOKIE['errortype'].' alert-dismissible" role="alert">'.$_COOKIE['error'].'</div>';
+//Remove cookies 
+	setcookie("error", '', time()-360, "/", $url);
+	setcookie("errortype", '', time()-360, "/", $url);
+	unset($_COOKIE['error']);
+	unset($_COOKIE['errortype']);
+}
 
 //ErrorOut()
 
 function errorOut($error, $type = "info", $rel = "/")
 {
-    $url = "http://civtrade.com";
-    header("Location: ".$url.$rel."?note=".$error.'&type='.$type);
+    global $url;
+	setcookie("error", $error, time()+86400, "/", $url);
+	setcookie("errortype", $type, time()+86400, "/", $url);
+    header("Location: http://".$url.$rel);
 	exit;
 }
 
@@ -140,31 +176,53 @@ function redir($location)
     header( "Location: ".$location);
 	exit;
 }
-//Errors
-
-if (isset($_GET['note']))
-{
-    if (isset($_GET['type'])) {
-        echo '<div align="center" class="alert alert-'.$_GET['type'].' alert-dismissible" role="alert">'.$_GET['note'].'</div>';
-    }
-    else {
-        echo '<div align="center" class="alert alert-info alert-dismissible" role="alert"><b>'.$_GET['note'].'</b></div>';
-    }
-}
 
 //Framebreaker
 
-echo '<script language="JavaScript" type="text/javascript">
-  if (top.location != location) {
-    top.location.href = document.location.href ;
-  }</script>
-';
+if ($shouldFramebreak) {
+    echo '<script language="JavaScript" type="text/javascript">
+        if (top.location != location) {
+        top.location.href = document.location.href ;
+        }</script>
+    ';
+}
 
 //IE
 
-if(preg_match('/(?i)msie/',$_SERVER['HTTP_USER_AGENT'])) {
-    // if IE<=8
-    echo '<script>alert("Internet explorer is not supported and may cause multiple graphical glitches");</script>';
+if ($warnOnIE) {
+    if(preg_match('/(?i)msie/',$_SERVER['HTTP_USER_AGENT'])) {
+        // if IE<=8
+        echo '<script>alert("Internet explorer is not supported and may cause multiple graphical glitches");</script>';
+    }
+}
+
+//CheckToken
+if (getcwd() == '/var/www/civ/api') {
+    //Clean the echo'd stuff in the file
+    ob_end_clean();
+    //Require any token
+    if ($requireAPIToken) {
+        if (!isset($_GET['token'])) { die('Missing an API token'); }
+
+        //Require valid token and valid user
+        $query = "SELECT verified FROM users WHERE confcode = ?";
+        $stmt = mysqli_stmt_init($con);
+        $stmt->prepare($query);
+        $stmt->bind_param('s', $_GET['token']);
+        $stmt->execute();
+        $result2=$stmt->get_result();
+        $row = mysqli_fetch_assoc($result2);
+        if ($row['verified'] != 'y') { die('Invalid API token OR your account is not verified OR your API token has been suspended'); }
+    }
+    //Log
+    if ($logAPIRequests) {
+        $query = "INSERT INTO api (token, loc, time, page) VALUES (?, ?, NOW(), ?);";
+        $stmt = mysqli_stmt_init($con);
+        $stmt->prepare($query);
+        $stmt->bind_param('sss', $_GET['token'], $_SERVER['REMOTE_ADDR'], basename($_SERVER['PHP_SELF']));
+        $stmt->execute();
+        $result2=$stmt->get_result();
+    }
 }
 
 ?>
