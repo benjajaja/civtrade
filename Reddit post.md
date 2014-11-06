@@ -1,4 +1,4 @@
-***If you have any ideas or suggestions, please let me know. I really need ideas***
+**If you have any ideas or suggestions, please let me know. I really need ideas**
 
 ----
 
