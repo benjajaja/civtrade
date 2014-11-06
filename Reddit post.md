@@ -50,6 +50,8 @@ If you're getting the error `Invalid API token OR your account is not verified O
 
 **Changelog:**
 
+- Added an API!
+
 - Fixed the last remaining SQLi-possible area, I don't know how I missed it the first time but they should all be gone now
 
 - Fixed a few XSS areas, they *should* be removed entirely.
@@ -58,7 +60,13 @@ Those were both very serious security holes, hopefully it's pretty secure now.
 
 - Added a **very giltchy and rudamentary** PM system. It should, quite frankly, not be used right now, it's still in very early beta.
 
-- http://beta.civtrade.com is now where I'll test my changes before pushing them to the main server/github
+- http://beta.civtrade.com is now where I'll test my changes before pushing them to the main server/github. 
+ 
+- Errors have been disabled on the main site (this should have been done a while ago)
+
+- Removed copy to clipboard (do you really need something to help you with this?)
+
+- Created a reset password thing, to reset your password hop on to civcraft and type **/msg gastriko register resetpw**
 
 ----
 
@@ -80,4 +88,10 @@ Those were both very serious security holes, hopefully it's pretty secure now.
  
  - Notes go away after one view
  
- - 
+- Removed a hard-coded key
+
+- Locations weren't returning anything
+
+----
+
+***Once again, PLEASE give me any suggestions on how to make this a better website or improve it in some way***
