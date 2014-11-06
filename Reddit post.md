@@ -1,4 +1,14 @@
-**If you have any ideas or suggestions, please let me know. I really need ideas**
+**Before we get to the API...** 
+
+/u/Eeazt made a [fantastic comment](https://www.reddit.com/r/Civcraft/comments/2l01n6/civtrade_is_now_open_source_last_30_hours_of/clqucvw) a little bit ago:
+
+>I'll absolutely be using this from now on provided we can maneuver a mass transition from civcraftexchange over here.
+
+I'd like to ask you guys, what would it take to make a migration? As far as I can tell the only downside to CivTrade over /r/CivcraftExchange is the amount of people using the subreddit.
+
+I'm only making this because I truely think it's a better alternative. I don't have ads, charge diamonds for stickied posts, etc... It's all because I truely think we can make something better. 
+
+**TL;DR: What would it take to make you move to CivTrade?**
 
 ----
 
@@ -32,11 +42,27 @@ If you're getting the error `Invalid API token OR your account is not verified O
 
 ----
 
+**Future plans**
+
+//Todo: Talk about the stuff 597 and I talked about
+
+----
+
 **Changelog:**
 
 - Fixed the last remaining SQLi-possible area, I don't know how I missed it the first time but they should all be gone now
 
-- Fixed a few XSS areas, they *should* be removed.
+- Fixed a few XSS areas, they *should* be removed entirely.
+
+Those were both very serious security holes, hopefully it's pretty secure now.
+
+- Added a **very giltchy and rudamentary** PM system. It should, quite frankly, not be used right now, it's still in very early beta.
+
+- http://beta.civtrade.com is now where I'll test my changes before pushing them to the main server/github
+
+----
+
+**Minor bug fixes:**
 
 - Fixed /control's padding on the User Info panel
 
@@ -44,22 +70,14 @@ If you're getting the error `Invalid API token OR your account is not verified O
 
 - Added settings in /other/req.php to easily change/disable a few major areas
 
-- Added a **very giltchy and rudamentary** PM system. It should, quite frankly, not be used right now, it's still in very early beta.
-
 - Moved away from the MySQL root user and made one with just needed perms
 
 - http://beta.civtrade.com is now where I'll test my changes before pushing them to the main server/github
 
-- Notes moved to cookies instead of being in the URL, meaning:
+- [Notes](https://i.imgur.com/WHTbPaf.png) moved to cookies instead of being in the URL, meaning:
 
  - The URL won't be cluttered
  
  - Notes go away after one view
  
-//TODO: 7 and above
-
-----
-
-**Future plans**
-
-//Todo: Talk about the stuff 597 and I talked about
+ - 
