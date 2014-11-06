@@ -1,6 +1,7 @@
 <?php
 require('/var/www/civ/other/req.php');
 date_default_timezone_set("America/Los_Angeles");
+
 //Search
 
 echo '<div class="panel panel-primary">
@@ -11,7 +12,7 @@ echo '<div class="panel panel-primary">
             <input type="text" name="have" class="form-control" placeholder="I have">
             <input type="text" name="loc" class="form-control" placeholder="Location (full city name)">
             <button type="submit" class="btn btn-default">Search</button></form>
-          </div></div></div>';
+            <a href="../?showOwnDisabled"><button class="btn btn-primary">Show your inactive posts</button></a></div></div></div>';
 
 //Logic for ID
 if (isset($_GET['id'])) {
@@ -38,7 +39,7 @@ else if (!isset($_GET['want'])) {
     //Show own disabled
     else if (isset($_GET['showOwnDisabled'])) {
         if (isset($_COOKIE['user'])) {
-$query = "SELECT * FROM offers WHERE active='n' AND poster=? ORDER BY offerid DESC";
+        $query = "SELECT * FROM offers WHERE active='n' AND poster=? ORDER BY offerid DESC";
         }
         else {
             errorOut('You must login to view your own disabled posts', 'danger');
@@ -101,6 +102,16 @@ $currentVersion = 'primary';
 
 //Output cards
 while ($row = $result->fetch_assoc()) {
+    //Verification status 
+    //This NEEDS TO BE FIXED, querying every offer is proably the source of lag...
+    $query = "SELECT * FROM users WHERE name= ?";
+    $stmt = mysqli_stmt_init($con);
+    $stmt->prepare($query);
+    $stmt->bind_param('s', $row['poster']);
+    $stmt->execute();
+    $result2=$stmt->get_result();
+	$posterInfo = mysqli_fetch_assoc($result2);
+    
     //Swap between styles
     if ($currentVersion == 'primary' or $currentVersion == "danger") {
         $currentVersion = 'info';
@@ -108,16 +119,8 @@ while ($row = $result->fetch_assoc()) {
     else {
         $currentVersion = 'primary';
     }
-    
-    //Set up user info for rep and (un)verified
-	$query = "SELECT * FROM users WHERE name= ?";
-    $stmt = mysqli_stmt_init($con);
-    $stmt->prepare($query);
-    $stmt->bind_param('s', $row['poster']);
-    $stmt->execute();
-    $result2=$stmt->get_result();
-	$userInfo = mysqli_fetch_assoc($result2);
-    if ($userInfo['verified'] == 'n') {
+
+    if ($posterInfo['verified'] == 'n') {
         $verifiedText = '<b>Unverified</b>';
     }
     else {
@@ -131,28 +134,16 @@ while ($row = $result->fetch_assoc()) {
 	else {
 		echo '<div class="panel panel-danger"> <b>DISABLED</b> - ';
 	}
-    
         $postedTime = strtotime($row['creation']);
         $diff = time() - $postedTime;
-        if (date("d", $diff) == 1) { 
-            $dayString = 'day';
-        }
-        else {
-            $dayString = 'days';
-        }
+        if (date("d", $diff) == 1) { $dayString = 'day'; }
+        else { $dayString = 'days'; }
         
-        if (date("H", $diff) == 1) {
-            $hourString = 'hour';
-        }
-        else {
-            $hourString = 'hours';
-        }
-        //Echo post info
-        //echo 'Offer ID: '.$row['offerid'].', posted '.date("d", $diff).' '.$dayString.' and '.date("H", $diff).' '.$hourString.' ago';
+        if (date("H", $diff) == 1) { $hourString = 'hour'; }
+        else { $hourString = 'hours'; }
         
         //Hour:Minute Month/day/year
 		echo 'Offer ID: '.$row['offerid'].', posted '.date("H:i m/d/y", strtotime($row['creation']));
-        //echo '<div class="panel-heading"><font size="5">'.$row['poster'].' (<a  style="color: #66CD00;" href="./actions/viewrep.php?user='.$row['poster'].'">'.$userInfo['rep'].' rep</a> - '.$verifiedText.')</font></div>
         echo '<div class="panel-heading"><font size="5">'.$row['poster'].' ('.$verifiedText.')</font></div>
         <div class="panel-body">';
         
@@ -171,12 +162,16 @@ while ($row = $result->fetch_assoc()) {
         }
         
         //Echo out location and notes
-        echo '<b>Location:</b> '.$row['location'].'<br>
-        <b>Notes:</b> '.$row['notes'].'<br>';
+        echo '<b>Location:</b> '.$row['location'].'<br>';
+        //echo '<b>Location:</b><br>
+        echo '<b>Notes:</b> '.$row['notes'].'<br>';
         
         //Link directly to the post
         
         echo '<a href="http://'.$url.'/?id='.$row['offerid'].'"><button type="button" class="btn btn-info">Direct link</button></a> ';
+        
+        //Send PM
+        echo ' <a href="./actions/pm.php?postID='.$row['offerid'].'&to='.$row['poster'].'"><button type="button" class="btn btn-primary">Send user a PM</button></a> '; 
         
         //If they're logged in...
         if (isset($_COOKIE['user'])) {
@@ -193,7 +188,7 @@ while ($row = $result->fetch_assoc()) {
             
             //If viewing disabled posts, show a "mark active" button
             if (isset($_GET['showAllDisabled']) or isset($_GET['showOwnDisabled'])) {
-                echo '<a href="./actions/remove.php?type=activate&id='.$row['offerid'].'"> <button type="button" class="btn btn-info">Mark active</button></a>';
+                echo '<a href="./actions/remove.php?type=activate&id='.$row['offerid'].'"> <button type="button" class="btn btn-warning">Mark active</button></a>';
             }
         }
       echo '</div>

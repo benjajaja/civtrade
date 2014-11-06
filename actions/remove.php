@@ -19,7 +19,7 @@
 					$stmt->prepare($query);
 					$stmt->bind_param('i', $_GET['id']);
 					$stmt->execute();
-                    errorOut("Successfully marked post as inactive. To view your inactive posts, login to the <a href=\"./control\">control panel</a> and click \"Show your disabled posts\" in the \"view and edit user information\" tab", "success");
+                    errorOut("Successfully marked post as inactive. To view your inactive posts, click \"Show your inactive posts\"", "success");
                 }
                 else {
                     errorOut("You do not have the required permission MARK_OTHERS_INACTIVE to do that!", "danger");

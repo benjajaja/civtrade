@@ -8,15 +8,6 @@ if (!isset($_COOKIE['user'])) {
 
 //Create new post
 
-//Gather user info
-$query = "SELECT * FROM users WHERE name= ?";
-$stmt = mysqli_stmt_init($con);
-$stmt->prepare($query);
-$stmt->bind_param('s', $_COOKIE['user']);
-$stmt->execute();
-$result2=$stmt->get_result();
-$userInfo = mysqli_fetch_assoc($result2);
-
 //If unverified
 
 echo '<script>function copyToClipboard() {
@@ -26,13 +17,13 @@ echo '<script>function copyToClipboard() {
 if ($userInfo['verified'] == 'n') {
     echo '<div class="panelControl panel-danger">
     <div class="panel-heading"><font size="5">Verify your account to let people know it\'s really you</font></div>
-        Verifying your account is easy and should take less than 10 seconds. All you have to do is log on to civcraft and type:<br><br>
+        <div class="panel-body">Verifying your account is easy and should take less than 10 seconds. All you have to do is log on to civcraft and type:<br><br>
         
         <div align="center"><b>/msg gastriko register '.$userInfo['confcode'].'</b><br>
         
 		<b>Do not share this code!</b> It is also your API key, which is linked to your account and logged.</div><br>
 		
-        Once you verify your account, this message will go away and your verification status will be shown above all your posts.
+        Once you verify your account, this message will go away and your verification status will be shown above all your posts.</div>
 		
     </div>';
 }

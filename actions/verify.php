@@ -25,6 +25,32 @@
                 $stmt->execute();
                 die ("Your account has been unverified.");
             }
+            //Reset password
+            if ($_GET['code'] == 'resetpw') {
+                $rnd = '';
+                $characters = "abcdefghijklmnopqrstuvwxyz0123456789";
+                for ($i = 0; $i < 12; $i++) {
+                  $rnd .= $characters[rand(0, strlen($characters) - 1)];
+                }
+                //Update password
+                $query = "UPDATE users SET passhash = ? WHERE name = ?";
+                $passhash = password_hash($rnd, PASSWORD_DEFAULT);
+                $stmt = mysqli_stmt_init($con);
+                $stmt->prepare($query);
+                $stmt->bind_param('ss', $passhash, $_GET['user']);
+                $stmt->execute();
+                
+                //Update passid
+                
+                $query = "UPDATE users SET passid = ? WHERE name = ?";
+                $passhash = password_hash($rnd, PASSWORD_DEFAULT);
+                $stmt = mysqli_stmt_init($con);
+                $stmt->prepare($query);
+                $stmt->bind_param('ss', $rnd, $_GET['user']);
+                $stmt->execute();
+                http_response_code(200);
+                die('Your password has been reset to '.$rnd);
+            }
 			//Get their confcode
 			$query = "SELECT confcode FROM users WHERE name= ?";
 			$stmt = mysqli_stmt_init($con);

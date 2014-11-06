@@ -36,6 +36,23 @@ $requireAPIToken = true;
 //Default: true
 $logAPIRequests = true;
 
+//news
+//This will be displayed in an alert (The things that show when you see "Successfully logged in", etc) at the top of every page, provided there is no other notice
+//If empty, no news will be displayed
+//Default: Empty ("" or '')
+$news = "";
+
+//newsType
+//If news is set, this changes the type. Options are default bootstrap types: warning, success, danger, primary, default, info
+//Throws an error if it's an invalid type and looks ugly
+//Default: warning
+$newsType = "warning";
+
+//forceNews
+//If set to true, news will always show, even if a note is set to show, resulting in two alerts at the top of the screen
+//Default: false
+$forceNews = false;
+
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                      //
@@ -85,7 +102,7 @@ function fake404() {
 }
 
 
-//Level
+//Level5
 if (isset($_COOKIE['user'])) {
     $query = "SELECT * FROM users WHERE name=?";
     $stmt = mysqli_stmt_init($con);
@@ -130,7 +147,7 @@ echo '<link rel="stylesheet" type="text/css" href="http://'.$url.'/other/stylene
       </ul>';
         if (isset($_COOKIE['user'])) {
             echo '<ul class="nav navbar-nav">
-			<li><a href="../?showOwnDisabled">Show your disabled posts</a></li>';
+            <li><a href="../actions/pm.php">PMs</a></li>';
 			if ($level == 3) { 
 				echo '<li><a href="../?showAllDisabled">Show all disabled posts</a></li>';
 			}
@@ -145,6 +162,13 @@ echo '<link rel="stylesheet" type="text/css" href="http://'.$url.'/other/stylene
     echo '</div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>';
+
+//News
+if ($news != "") {
+    if ($forceNews or !isset($_COOKIE['error'])) {
+        echo '<div align="center" class="alert alert-'.$newsType.' alert-dismissible" role="alert">'.$news.'</div>';
+    }
+}
 
 //Check for error
 
@@ -219,7 +243,9 @@ if (getcwd() == '/var/www/civ/api') {
         $query = "INSERT INTO api (token, loc, time, page) VALUES (?, ?, NOW(), ?);";
         $stmt = mysqli_stmt_init($con);
         $stmt->prepare($query);
-        $stmt->bind_param('sss', $_GET['token'], $_SERVER['REMOTE_ADDR'], basename($_SERVER['PHP_SELF']));
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $basename = basename($_SERVER['PHP_SELF']);
+        $stmt->bind_param('sss', $_GET['token'], $ip, $basename);
         $stmt->execute();
         $result2=$stmt->get_result();
     }

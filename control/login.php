@@ -15,6 +15,7 @@ else {
                 <input type="password" name="pass" class="form-control" placeholder="Password"> <br>
                 <button type="submit" class="btn btn-primary">Login</button> 
             </form>
+            Forgot your password? Hop on to CivCraft and run the command <b>/msg gastriko register resetpw</b>
         </div></div>
         
         <div class="panel panel-info">
