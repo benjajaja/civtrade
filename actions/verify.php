@@ -1,5 +1,5 @@
 <?php
-	require('/var/www/civ/other/req.php');
+	require('/var/www/civbeta/other/req.php');
     ob_end_clean();    
     //If there is no token GET value, fake a 404
     if (!isset($_GET['token'])) { fake404(); }

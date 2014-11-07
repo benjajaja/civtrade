@@ -1,5 +1,5 @@
 <?php
-    require('/var/www/civ/other/req.php');
+    require('/var/www/civbeta/other/req.php');
     //If they're logged in
     if (isset($_COOKIE['user']))
     {

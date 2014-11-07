@@ -1,5 +1,5 @@
 <?php
-require('/var/www/civ/other/req.php');
+require('/var/www/civbeta/other/req.php');
 
 //Only let people who aren't logged in to login
 if (isset($_COOKIE['user'])) {

@@ -6,7 +6,7 @@
 //SQL Connection initlization 
 //HOST is usually 'localhost' with a VPS, if cPanel you'll USUALLY get an IP
 //Example: $con = mysqli_connect('localhost', 'notRoot', 'password123', 'civ');
-$con = mysqli_connect('HOST', 'USERNAME', 'PASSWORD', 'DATABASE_NAME');
+$con = mysqli_connect('HOST', 'USER', 'PASSWORD', 'DATABASE_NAME');
 
 //URL - Set the BASE URL here. This includes ALL SUBDOMAINS.
 //Example: $url = "coolsite.freewebhosting.com";
@@ -147,11 +147,8 @@ echo '<link rel="stylesheet" type="text/css" href="http://'.$url.'/other/stylene
       </ul>';
         if (isset($_COOKIE['user'])) {
             echo '<ul class="nav navbar-nav">
-            <li><a href="../actions/pm.php">PMs</a></li>';
-			if ($level == 3) { 
-				echo '<li><a href="../?showAllDisabled">Show all disabled posts</a></li>';
-			}
-            echo '<li><a href="/actions/loginLogic.php?type=logout">Log out of '.$_COOKIE['user'].'</a></li></ul>';
+            <li><a href="../actions/pm.php">PMs</a></li>
+            <li><a href="/actions/loginLogic.php?type=logout">Log out of '.$_COOKIE['user'].'</a></li></ul>';
         }
         else {
             echo '<ul class="nav navbar-nav">

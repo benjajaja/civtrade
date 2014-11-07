@@ -1,5 +1,5 @@
 <?php
-require('/var/www/civ/other/req.php');
+require('/var/www/civbeta/other/req.php');
 //Random alphanumb generator
 
 $rnd = '';

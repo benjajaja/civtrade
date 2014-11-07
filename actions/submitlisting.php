@@ -1,5 +1,5 @@
 <?php
-    require('/var/www/civ/other/req.php');
+    require('/var/www/civbeta/other/req.php');
     
     //CREATE TABLE offers(poster TEXT, have TEXT, haveamt INT, want TEXT, wantamt INT, offerid INT AUTO_INCREMENT PRIMARY KEY), active CHAR,notes TEXT;
 	/*

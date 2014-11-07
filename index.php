@@ -1,7 +1,6 @@
 <?php
 require('/var/www/civ/other/req.php');
 date_default_timezone_set("America/Los_Angeles");
-
 //Search
 
 echo '<div class="panel panel-primary">
@@ -12,7 +11,11 @@ echo '<div class="panel panel-primary">
             <input type="text" name="have" class="form-control" placeholder="I have">
             <input type="text" name="loc" class="form-control" placeholder="Location (full city name)">
             <button type="submit" class="btn btn-default">Search</button></form>
-            <a href="../?showOwnDisabled"><button class="btn btn-primary">Show your inactive posts</button></a></div></div></div>';
+            <a href="../?showOwnDisabled"><button class="btn btn-primary">Show your inactive posts</button></a>';
+			if ($level == 3) {
+				echo ' <a href="../?showAllDisabled"><button class="btn btn-info">Show your inactive posts</button></a>';
+			}
+			echo '</div></div></div>';
 
 //Logic for ID
 if (isset($_GET['id'])) {
@@ -100,18 +103,19 @@ else
 //To swap between rows
 $currentVersion = 'primary';
 
+//Verification status 
+$query = "SELECT name,verified FROM users";
+$stmt = mysqli_stmt_init($con);
+$stmt->prepare($query);
+$stmt->execute();
+$result2=$stmt->get_result();
+$posterInfo = array();
+while ($row = mysqli_fetch_assoc($result2)) {
+  $posterInfo[$row["name"]] = $row["verified"];
+}
+
 //Output cards
 while ($row = $result->fetch_assoc()) {
-    //Verification status 
-    //This NEEDS TO BE FIXED, querying every offer is proably the source of lag...
-    $query = "SELECT * FROM users WHERE name= ?";
-    $stmt = mysqli_stmt_init($con);
-    $stmt->prepare($query);
-    $stmt->bind_param('s', $row['poster']);
-    $stmt->execute();
-    $result2=$stmt->get_result();
-	$posterInfo = mysqli_fetch_assoc($result2);
-    
     //Swap between styles
     if ($currentVersion == 'primary' or $currentVersion == "danger") {
         $currentVersion = 'info';
@@ -120,7 +124,7 @@ while ($row = $result->fetch_assoc()) {
         $currentVersion = 'primary';
     }
 
-    if ($posterInfo['verified'] == 'n') {
+    if ($posterInfo[$row["poster"]] == 'n') {
         $verifiedText = '<b>Unverified</b>';
     }
     else {
@@ -146,20 +150,21 @@ while ($row = $result->fetch_assoc()) {
 		echo 'Offer ID: '.$row['offerid'].', posted '.date("H:i m/d/y", strtotime($row['creation']));
         echo '<div class="panel-heading"><font size="5">'.$row['poster'].' ('.$verifiedText.')</font></div>
         <div class="panel-body">';
-        
+		
+		//Hyperlink /u/ and /r/
+		/*$words[] = explode(" ", $row['have']);
+		foreach ($words as $w) {
+			if ($w[0] == '/' and ($w[1] == 'r' or $w[1] == 'u') and $w[2] == '/') {
+				$w = '<a href="http://reddit.com'.$w.'">'.$w.'</a>';
+			}
+		}
+		implode($words);*/
+		
         //Replace 0 with ???
-        if ($row['haveamt'] == 0) {
-        echo '<b>Has:</b> ??? '.$row['have'].'<br>';
-        }
-        else {
-        echo '<b>Has:</b> '.$row['haveamt'].' '.$row['have'].'<br>';
-        }
-        if ($row['wantamt'] == 0) {
-        echo '<b>Wants:</b> ??? '.$row['want'].'<br>';
-        }
-        else {
-        echo '<b>Wants:</b> '.$row['wantamt'].' '.$row['want'].'<br>';
-        }
+        if ($row['haveamt'] == 0) { echo '<b>Has:</b> ??? '.$row['have'].'<br>'; }
+		else { echo '<b>Has:</b> '.$row['haveamt'].' '.$row['have'].'<br>'; }
+        if ($row['wantamt'] == 0) { echo '<b>Wants:</b> ??? '.$row['want'].'<br>'; }
+        else { echo '<b>Wants:</b> '.$row['wantamt'].' '.$row['want'].'<br>'; }
         
         //Echo out location and notes
         echo '<b>Location:</b> '.$row['location'].'<br>';
