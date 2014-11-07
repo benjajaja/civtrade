@@ -41,10 +41,14 @@ If you're getting the error `Invalid API token OR your account is not verified O
 ***If you need an API made, tell me. The reason there's only one right now is because that's the only one that's been requested. I'm very open to making new ones***
 
 ----
-
+<a name="plans"></a>
 **Future plans**
 
-//Todo: Talk about the stuff 597 and I talked about
+/u/597 and I were disussing last Wednesday in Mumble about some possible ways to head, along wtih integration with CivCredit. I'm not sure if I'm allowed to say what I know about the future of CivCredit (I probably am, it's nothing major), but for now all I want to say is it may be a month or two before the API will be done. All I'm going to put is [this comment](https://www.reddit.com/r/CivCredit/comments/2kdy2f/api_request/clu29ok) that /u/TheCheaterman made about what the API will be once it's done.
+
+Onto non-CivCredit related things...
+
+/u/597 mentioned a system similar to [this](https://eve-central.com/), where the average prices of every trade were logged and dispalyed. People can still make offers at any price they want 
 
 ----
 
