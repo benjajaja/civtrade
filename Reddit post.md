@@ -68,6 +68,8 @@ As always, any thoughts are much appriciated.
 
 - Added an API!
 
+- Found and squashed a bug that caused the database to be queried once per offer every time the index page loaded, load times should be noticably faster now
+
 - Fixed the last remaining SQLi-possible area, I don't know how I missed it the first time but they should all be gone now
 
 - Fixed a few XSS areas, they *should* be removed entirely.
