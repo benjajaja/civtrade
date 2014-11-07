@@ -48,15 +48,19 @@ If you're getting the error `Invalid API token OR your account is not verified O
 
 Onto non-CivCredit related things...
 
+Personally I subscribe to Google's philosophy that you should never announce a product without a working prototype, however I don't think it would work here (see issue #3). So, I'm going to go ahead and talk about it now.
+
 /u/597 mentioned a system similar to [this](https://eve-central.com/), where the average prices of every trade were logged and dispalyed. People can still make offers at any price they want, this is just an addition to the current system.
 
 The issues I see with it:
 
 - Sort of destroys the idea of the free market. However, people already do this, just not with a formal system (ie, ~16i->1d, ~130d->prot, etc)
 
-- It'd be **very** difficult to get an accurate average for every item in relation to every other item. There would be about of 400! (400 factorial, not **uhrmahgurd 400!!!!**) different item combonations, which is a [really, really, really big number.](https://www.google.com/#q=400!). It may be smarter to only create it for diamond and iron (but still let people ask/offer anything, it just won't be added to the database if it's not i/d)
+- It'd be **very** difficult to get an accurate average for every item in relation to every other item. There would be about of 400! (400 factorial, not **uhrmahgurd 400!!!!**) different item combonations, which is a [really, really, really big number.](https://i.imgur.com/FukNFmO.png) It may be smarter to only create it for diamond and iron (but still let people ask/offer anything, it just won't be added to the database if it's not i/d)
 
-- 
+- **It would require a lot of trades set up before it would work.** This is the primary setback. To get an accurate idea of how much each item would cost on average, we'd need about 5 trades. Let's assume there's only 100 items regularly bought (armor/furnaces/doors/etc probably aren't bought *too* often). That would be a total of 500 trades set up. There's no technical limitation to this, my database can handle around 9.7 million offers, the only setback is people not using CivTrade. I've thought about trying to parce CivcraftExchange for data, however that may be pretty difficult because there's no standard followed for posting trades ([issue 6](https://www.reddit.com/r/Civcraft/comments/2iymxi/ive_spent_about_50_hours_working_on_an/)). If anyone has any ideas about how to promote CivTrade or get people to use it more, please let me know.
+
+As always, any thoughts are much appriciated. 
 
 ----
 
