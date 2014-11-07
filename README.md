@@ -9,6 +9,8 @@ Pull requests are always welcome.
 
 For setup instructions, visit the [wiki](https://github.com/minicl55/civtrade/wiki)
 
+If you would like to do something cool with my code but need a less restricitve licence (even though this restricts very little), feel free to contact me with your plans and we can talk.
+
 The licence keeps deleting itself so I'm just going to put it here:
 
 ----
