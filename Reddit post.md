@@ -80,8 +80,6 @@ Those were both very serious security holes, hopefully it's pretty secure now.
 
 - Moved away from the MySQL root user and made one with just needed perms
 
-- http://beta.civtrade.com is now where I'll test my changes before pushing them to the main server/github
-
 - [Notes](https://i.imgur.com/WHTbPaf.png) moved to cookies instead of being in the URL, meaning:
 
  - The URL won't be cluttered
@@ -90,7 +88,7 @@ Those were both very serious security holes, hopefully it's pretty secure now.
  
 - Removed a hard-coded key
 
-- Locations weren't returning anything
+- Locations weren't returning anything, now they are
 
 ----
 
