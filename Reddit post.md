@@ -32,7 +32,7 @@ Once you verify your account, scroll to the bottom fo the UserCP. You should see
 
 The cities API takes no argruments and returns a list of cities with the amount of offers. As of right now, the page returns:
 
-`["",1,"aurora",3,"Ember",1,"Etherium",1,"fellowship or orion",1,"New Senntisten",2,"orion",15,"the jungle",1,"Titan",1]`
+`["aurora",3,"Ember",1,"Etherium",1,"fellowship or orion",1,"minus-minus",1,"New Senntisten",2,"orion",15,"the jungle",1,"Titan",1]`
 
 The first string is the city name, followed by an int of the total number of offers.
 
