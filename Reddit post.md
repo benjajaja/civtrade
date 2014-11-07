@@ -38,7 +38,7 @@ The first string is the city name, followed by an int of the total number of off
 
 If you're getting the error `Invalid API token OR your account is not verified OR your API token has been suspended`, you have an invalid API token, your account isn't verified or your API token has been suspended. PM me on reddit if you have any troubles.
 
-***If you need an API made, tell me. The reason there's only one right now is because that's the only one that's been requested. I'm very open to making new ones***
+***If you need an API made, tell me. The reason there's only one right now is because that's the only one that's been requested. I'm very open to making new ones to meet someone's specific needs***
 
 ----
 <a name="plans"></a>
