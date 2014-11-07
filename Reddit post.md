@@ -54,7 +54,7 @@ The issues I see with it:
 
 - Sort of destroys the idea of the free market. However, people already do this, just not with a formal system (ie, ~16i->1d, ~130d->prot, etc)
 
-- It'd be **very** difficult to get an accurate average for every item in relation to every other item. There would be about of 400! (400 factorial, not **400!!!!**) different item combonations, which is a [really, really, really big number.](https://www.google.com/#q=400!). It may be smarter to only create it for diamond and iron (but still let people ask/offer anything, it just won't be added to the database if it's not i/d)
+- It'd be **very** difficult to get an accurate average for every item in relation to every other item. There would be about of 400! (400 factorial, not **uhrmahgurd 400!!!!**) different item combonations, which is a [really, really, really big number.](https://www.google.com/#q=400!). It may be smarter to only create it for diamond and iron (but still let people ask/offer anything, it just won't be added to the database if it's not i/d)
 
 - 
 
