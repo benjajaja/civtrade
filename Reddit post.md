@@ -62,6 +62,8 @@ The issues I see with it:
 
 As always, any thoughts are much appriciated. 
 
+Also I'm adding [new methods of sorting](https://github.com/minicl55/civtrade/issues/22)
+
 ----
 
 **Changelog:**
