@@ -8,7 +8,7 @@
 
 I'd like to ask you guys, what would it take to make a migration? As far as I can tell the only downside to CivTrade over /r/CivcraftExchange is the amount of people using the subreddit.
 
-I'm only making this because I truely think it's a better alternative. I don't have ads, charge diamonds for stickied posts, etc... It's all because I truely think we can make something better. 
+I'm only making this because I truely think it's a better alternative. I don't have ads, I don't charge diamonds for stickied posts, etc... It's all because I truely think we can make something better. 
 
 **TL;DR: What would it take to make you move to CivTrade?**
 
