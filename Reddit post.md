@@ -2,7 +2,9 @@
 
 /u/Eeazt made a [fantastic comment](https://www.reddit.com/r/Civcraft/comments/2l01n6/civtrade_is_now_open_source_last_30_hours_of/clqucvw) a little bit ago:
 
->I'll absolutely be using this from now on provided we can maneuver a mass transition from civcraftexchange over here.
+>I'll absolutely be using this from now on **provided we can maneuver a mass transition from civcraftexchange over here.**
+
+(Emphasis mine)
 
 I'd like to ask you guys, what would it take to make a migration? As far as I can tell the only downside to CivTrade over /r/CivcraftExchange is the amount of people using the subreddit.
 
