@@ -58,7 +58,7 @@ The issues I see with it:
 
 - Sort of destroys the idea of the free market. However, people already do this, just not with a formal system (ie, ~16i->1d, ~130d->prot, etc)
 
-- It'd be **very** difficult to get an accurate average for every item in relation to every other item. There would be about of 400 factorial (400!) different item combonations, which is a [really, really, really big number.](https://i.imgur.com/FukNFmO.png) It may be smarter to only create it for diamond and iron (but still let people ask/offer anything, it just won't be added to the database if it's not i/d)
+- It'd be very difficult to get an accurate average for every item in relation to every other item. There would be about of 400 factorial (400!) different item combonations, which is a [really, really, really big number.](https://i.imgur.com/FukNFmO.png) It may be smarter to only create it for diamond or iron are involved in the trade (but still let people ask/offer anything, it just won't be added to the database if it doesn't contain i/d)
 
 - **It would require a lot of trades set up before it would work.** This is the primary setback. To get an accurate idea of how much each item would cost on average, we'd need about 5 trades. Let's assume there's only 100 items regularly bought (armor/furnaces/doors/etc probably aren't bought *too* often). That would be a total of 500 trades set up. There's no technical limitation to this, my database can handle around 9.7 million offers, the only setback is people not using CivTrade. I've thought about trying to parce CivcraftExchange for data, however that may be pretty difficult because there's no standard followed for posting trades ([issue 6](https://www.reddit.com/r/Civcraft/comments/2iymxi/ive_spent_about_50_hours_working_on_an/)). If anyone has any ideas about how to promote CivTrade or get people to use it more, please let me know.
 
@@ -76,19 +76,15 @@ Also I'm adding [new methods of sorting](https://github.com/minicl55/civtrade/is
 
 - Fixed the last remaining SQLi-possible area, I don't know how I missed it the first time but they should all be gone now
 
-- Fixed a few XSS areas, they *should* be removed entirely.
+- Added a very giltchy and rudamentary PM system. It's nowhere near completion and doesn't always work but it's there and I'll get it working soon.
 
-Those were both very serious security holes, hopefully it's pretty secure now.
-
-- Added a **very giltchy and rudamentary** PM system. It should, quite frankly, not be used right now, it's still in very early beta.
-
-- http://beta.civtrade.com is now where I'll test my changes before pushing them to the main server/github. 
+- http://beta.civtrade.com is now where I'll test my changes before pushing them to the main server/github. This means no more random crashes/errors on the pages
  
-- Errors have been disabled on the main site (this should have been done a while ago)
+- Errors have been disabled on the main site
 
-- Removed copy to clipboard (do you really need something to help you with this?)
+- Removed copy to clipboard
 
-- Created a reset password thing, to reset your password hop on to civcraft and type **/msg gastriko register resetpw**
+- Created a reset password thing, to reset your password, just hop on to civcraft and type **/msg gastriko register resetpw**
 
 ----
 
@@ -98,7 +94,7 @@ Those were both very serious security holes, hopefully it's pretty secure now.
 
 - Added defaults to the MySQL database for user settings
 
-- Added settings in /other/req.php to easily change/disable a few major areas
+- Added settings in /other/req.php to easily change/disable a few major settings if you decide to fork the project yourself
 
 - Moved away from the MySQL root user and made one with just needed perms
 
@@ -108,9 +104,7 @@ Those were both very serious security holes, hopefully it's pretty secure now.
  
  - Notes go away after one view
  
-- Removed a hard-coded key
-
-- Locations weren't returning anything, now they are
+- Fixed a bug where locations would be empty
 
 ----
 
