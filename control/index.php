@@ -1,5 +1,5 @@
 <?php
-require('/var/www/civbeta/other/req.php');
+require('/var/www/civ/other/req.php');
 
 //Only let logged in users view this page
 if (!isset($_COOKIE['user'])) {

@@ -1,5 +1,5 @@
 <?php
-	require('/var/www/civbeta/other/req.php');
+	require('/var/www/civ/other/req.php');
 	//Set place
 	if (isset($_POST['postID'])) { $place = $_POST['postID']; } 
 	else { $place = ''; }

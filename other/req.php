@@ -221,6 +221,7 @@ if ($warnOnIE) {
 if (getcwd() == '/var/www/civ/api') {
     //Clean the echo'd stuff in the file
     ob_end_clean();
+    header('Content-Type: application/json'); //Set header
     //Require any token
     if ($requireAPIToken) {
         if (!isset($_GET['token'])) { die('Missing an API token'); }

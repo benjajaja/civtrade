@@ -1,5 +1,5 @@
 <?php
-    require ('/var/www/civbeta/other/req.php');
+    require ('/var/www/civ/other/req.php');
     $query = "SELECT location, COUNT(`location`) AS amount FROM offers GROUP BY location";
     $result = mysqli_stmt_init($con);
     $result->prepare($query);

@@ -1,5 +1,5 @@
 <?php
-require('/var/www/civbeta/other/req.php');
+require('/var/www/civ/other/req.php');
 //Random alphanumb generator
 
 $rnd = '';
@@ -75,12 +75,12 @@ else if ($_GET['type'] == 'signup') {
             'n',
              0,
              ".$confCode.");";*/
-            $query = "INSERT INTO users (name,level,passhash,passid,verified,rep,confcode) VALUES (?, 1, ?, '".$rnd."', 'n', 0, '".$rndAPI."');";
-			$stmt = mysqli_stmt_init($con);
-			$stmt->prepare($query);
+            $query = "INSERT INTO users (name,level,passhash,passid,verified,confcode) VALUES (?, 1, ?, '".$rnd."', 'n', '".$rndAPI."')";
+            $stmt = mysqli_stmt_init($con);
+            $stmt->prepare($query);
 			$newPass = password_hash($_POST['pass'], PASSWORD_DEFAULT);
-			$stmt->bind_param('ss', $_POST['user'], $newPass);
-			$stmt->execute();
+            $stmt->bind_param('ss', $_POST['user'], $newPass);
+            $stmt->execute();
             setcookie("user", $_POST['user'], time()+86400, "/", $url);
             setcookie("userID", $rnd, time()+86400, "/", $url);
             errorOut("Successfully logged in", "success", "/control");

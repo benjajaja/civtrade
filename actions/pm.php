@@ -1,5 +1,5 @@
 <?php
-    require ('/var/www/civbeta/other/req.php');
+    require ('/var/www/civ/other/req.php');
     //Placeholders
     echo '<div align="center" class="alert alert-danger alert-dismissible" role="alert">PMs are in a <b>very early beta</b> and the system is <b>incredibly glitchy</b>. You should probably stick to redditmail for now unless you want to help test.</div>';
     if (isset($_GET['to'])) { $toPlace = $_GET['to']; }
