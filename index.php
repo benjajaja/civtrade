@@ -13,7 +13,7 @@ echo '<div class="panel panel-primary">
             <button type="submit" class="btn btn-default">Search</button></form>
             <a href="../?showOwnDisabled"><button class="btn btn-primary">Show your inactive posts</button></a>';
 			if ($level == 3) {
-				echo ' <a href="../?showAllDisabled"><button class="btn btn-info">Show your inactive posts</button></a>';
+				echo ' <a href="../?showAllDisabled"><button class="btn btn-info">Show all inactive posts</button></a>';
 			}
 			echo '</div></div></div>';
 
@@ -176,7 +176,7 @@ while ($row = $result->fetch_assoc()) {
         echo '<a href="http://'.$url.'/?id='.$row['offerid'].'"><button type="button" class="btn btn-info">Direct link</button></a> ';
         
         //Send PM
-        echo ' <a href="./actions/pm.php?postID='.$row['offerid'].'&to='.$row['poster'].'"><button type="button" class="btn btn-primary">Send user a PM</button></a> '; 
+		if ($row['poster'] != $_COOKIE['user']) { echo ' <a href="./actions/pm.php?postID='.$row['offerid'].'&to='.$row['poster'].'"><button type="button" class="btn btn-primary">Send user a PM</button></a> '; }
         
         //If they're logged in...
         if (isset($_COOKIE['user'])) {

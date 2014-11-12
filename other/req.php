@@ -53,6 +53,11 @@ $newsType = "warning";
 //Default: false
 $forceNews = false;
 
+//cityCheckType
+//Changes what happens if city is detected as invalid (pulling from http://txapu.com/cities.geojson)
+//Options: ignore (don't even check) and force (force the user to use a valid city name). If invalid, defaults to "force"
+//Default: force
+$cityCheckType = "force";
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                      //
@@ -102,7 +107,7 @@ function fake404() {
 }
 
 
-//Level5
+//Level
 if (isset($_COOKIE['user'])) {
     $query = "SELECT * FROM users WHERE name=?";
     $stmt = mysqli_stmt_init($con);
@@ -113,6 +118,9 @@ if (isset($_COOKIE['user'])) {
     $userInfo = mysqli_fetch_assoc($result2);
 	$level = $userInfo['level'];
     $whiteNav = 'navbar-inverse';
+	if ($level == 3 and isset($_GET['level1'])) {
+		$level = 1;
+	}
 }
 else {
 	$whiteNav = 'navbar-inverse';
@@ -155,6 +163,11 @@ echo '<link rel="stylesheet" type="text/css" href="http://'.$url.'/other/stylene
             <li><a href="/control/login.php">Log in</a></li>
             </ul>';
         }
+		if ($level == 3) {
+			echo '<ul class="nav navbar-nav">
+            <li><a href="./?level1">View as a level 1 user</a></li>
+            </ul>';
+		}
         echo '<ul class="nav navbar-nav"><li><a href="https://github.com/minicl55/civtrade">Now open-source!</a></li></ul>';
     echo '</div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->

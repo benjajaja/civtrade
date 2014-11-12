@@ -55,10 +55,10 @@ $result2=$stmt->get_result();
 $row = mysqli_fetch_assoc($result2);
 
 echo '<div class="panelControl panel-info">
-    <div class="panel-heading"><font size="5">View and edit user information (Soon: User-specific settings)</font></div>';
+    <div class="panel-heading"><font size="5">View and edit user information (Soon: User-specific settings)</font></div><div class="panel-body">';
 	//User options
 	if ($level == 3) {
-	echo '<div class="panel-body"><form method="POST" action="../actions/loginLogic.php?type=updateSettings" class="form-inline;">
+	echo '<form method="POST" action="../actions/loginLogic.php?type=updateSettings" class="form-inline;">
 		<input type="checkbox" checked name="relativetime"> Use relative timestamps</input><br>
 		<input type="checkbox" checked name="staticnav"> Static navbar (keep it in the same place instead of always being at the top of the page)</input><br> 
 		<input type="checkbox" checked name="closed"> I don\'t care about open-source</input><br>
@@ -68,11 +68,11 @@ echo '<div class="panelControl panel-info">
 	echo '<form method="POST" class="form-inline;" action="../actions/loginLogic.php?type=changepw"> <div class="form-group"> 
 		<div class="form-group"><input type="password" class="form-control" name="newPass" placeholder="New password"></div> 
 		<div class="form-group"><input type="password" class="form-control" name="newPassConf" placeholder="Confirm"></div> 
-		<button type="submit" class="btn btn-info">Submit</button></form></div></div></div></div>';
+		<button type="submit" class="btn btn-info">Submit</button></form></div></div></div>';
 
 //API
 
-if ($row['verified'] == 'y' and $level == 3) {
+if ($row['verified'] == 'y') {
 echo '<div class="panelControl panel-primary">Currently in public beta, requires a verified account.
 	<div class="panel-heading"><font size="5">API information</font></div>
 	<div class="panel-body"><b>Your API code: '.$row['confcode'].'</b><br>

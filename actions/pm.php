@@ -9,10 +9,10 @@
     else { $idPlace = ''; }
     
     //Query for PMs
-	$query = ("SELECT * FROM pms WHERE receiver = ? ORDER BY id DESC");
+	$query = ("SELECT * FROM pms WHERE receiver = ? or sender = ? ORDER BY id DESC");
     $stmt = mysqli_stmt_init($con);
     $stmt->prepare($query);
-    $stmt->bind_param('s', $_COOKIE['user']);
+    $stmt->bind_param('ss', $_COOKIE['user'], $_COOKIE['user']);
     $stmt->execute();
     $result=$stmt->get_result();
     $resultAssoc = mysqli_fetch_assoc($result);
