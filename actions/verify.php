@@ -1,8 +1,8 @@
 <?php
 	require('/var/www/civ/other/req.php');
     ob_end_clean();    
-    //If there is no token GET value, fake a 404
-    if (!isset($_GET['token'])) { fake404(); }
+    //If there is no token GET value, error out
+    if (!isset($_GET['token'])) { die('Missing token'); }
     
     //Confirm token is correct
 	$query = "SELECT confcode FROM users WHERE name = ?";
@@ -92,6 +92,6 @@
 		}
 	}
     else {
-        fake404();
+        die('Invalid token');
     }
 ?>

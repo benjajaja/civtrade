@@ -6222,6 +6222,12 @@ button.close {
   font-family:verdana;
 }
 
+ .bodystatic {
+  background-color:F5F5F5;
+  word-wrap: break-word;
+  font-family:verdana;
+}
+
 .side{
     position:fixed;
 }

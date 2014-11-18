@@ -124,11 +124,11 @@ while ($row = $result->fetch_assoc()) {
         $currentVersion = 'primary';
     }
 
-    if ($posterInfo[$row["poster"]] == 'n') {
-        $verifiedText = '<b>Unverified</b>';
+    if ($posterInfo[$row["poster"]] == 'y') {
+        $verifiedText = 'Verified';
     }
     else {
-        $verifiedText = 'Verified';
+        $verifiedText = '<b>Unverified</b>';
     }
     
     //If it's disabled, make it red and put a bold "DISABLED" thing
@@ -146,19 +146,12 @@ while ($row = $result->fetch_assoc()) {
         if (date("H", $diff) == 1) { $hourString = 'hour'; }
         else { $hourString = 'hours'; }
         
-        //Hour:Minute Month/day/year
-		echo 'Offer ID: '.$row['offerid'].', posted '.date("H:i m/d/y", strtotime($row['creation']));
+		if ($timestamps) {
+			//Hour:Minute Month/day/year
+			echo 'Offer ID: '.$row['offerid'].', posted '.date("H:i m/d/y", strtotime($row['creation']));
+		}
         echo '<div class="panel-heading"><font size="5">'.$row['poster'].' ('.$verifiedText.')</font></div>
         <div class="panel-body">';
-		
-		//Hyperlink /u/ and /r/
-		/*$words[] = explode(" ", $row['have']);
-		foreach ($words as $w) {
-			if ($w[0] == '/' and ($w[1] == 'r' or $w[1] == 'u') and $w[2] == '/') {
-				$w = '<a href="http://reddit.com'.$w.'">'.$w.'</a>';
-			}
-		}
-		implode($words);*/
 		
         //Replace 0 with ???
         if ($row['haveamt'] == 0) { echo '<b>Has:</b> ??? '.$row['have'].'<br>'; }
@@ -173,13 +166,12 @@ while ($row = $result->fetch_assoc()) {
         
         //Link directly to the post
         
-        echo '<a href="http://'.$url.'/?id='.$row['offerid'].'"><button type="button" class="btn btn-info">Direct link</button></a> ';
-        
-        //Send PM
-		if ($row['poster'] != $_COOKIE['user']) { echo ' <a href="./actions/pm.php?postID='.$row['offerid'].'&to='.$row['poster'].'"><button type="button" class="btn btn-primary">Send user a PM</button></a> '; }
+        echo '<a href="http://'.$url.'/?id='.$row['offerid'].'"><button type="button" class="btn btn-info">Direct link</button></a> ';       
         
         //If they're logged in...
         if (isset($_COOKIE['user'])) {
+            //Send PM
+            if ($row['poster'] != $_COOKIE['user']) { echo ' <a href="./actions/pm.php?postID='.$row['offerid'].'&to='.$row['poster'].'"><button type="button" class="btn btn-primary">Send user a PM</button></a> '; }
             //If they're an admin OR they're the poster, allow them to deactivate it
             if (($level >= 2 or $_COOKIE['user'] == $row['poster']) and $row['active'] == 'y') {
                 echo '<a href="./actions/remove.php?type=mark&id='.$row['offerid'].'"><button type="button" class="btn btn-warning">Mark inactive</button></a> ';

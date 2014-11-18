@@ -2,6 +2,7 @@
 require('/var/www/civ/other/req.php');
 //Random alphanumb generator
 
+//TODO: Make function in req to do this
 $rnd = '';
 $characters = "abcdefghijklmnopqrstuvwxyz0123456789";
 for ($i = 0; $i < 12; $i++) {
@@ -17,7 +18,7 @@ for ($i = 0; $i < 12; $i++) {
 if ($_GET['type'] == 'login')
 {
 	//Sleep for security purposes
-	sleep(1);
+	sleep($loginDelay / 1000);
     //Check if pass verifies
     
     //Get passhash
@@ -136,16 +137,12 @@ else if ($_GET['type'] == 'logout') {
 //Update settings
 
 else if ($_GET['type'] == 'updateSettings') {
-	$rel = 'false';
-	$white = 'false';
-	$def = 'false';
-	if (isset($_POST['relativetime'])) { $rel = 'true'; }
-	if (isset($_POST['whtienav'])) { $white = 'true'; }
-	if (isset($_POST['defaultsearch'])) { $def = 'true'; }
-	$query = "UPDATE users SET relativetime = ?, whitenav = ?, defaultsearch = ? WHERE name=?";
+    if (isset($_POST['staticnav'])) { $static = 1; } else { $static = 0; }
+    if (isset($_POST['closed'])) { $closed = 1; } else { $closed = 0; }
+	$query = "UPDATE users SET closed = ?, staticnav = ? WHERE name=?";
 	$stmt = mysqli_stmt_init($con);
 	$stmt->prepare($query);
-	$stmt->bind_param('ssss', $rel, $white, $def, $_COOKIE['user']);
+	$stmt->bind_param('sss', $closed, $static, $_COOKIE['user']);
 	$stmt->execute();
 	errorOut("Successfully updated your settings", "success", "/control");
 }

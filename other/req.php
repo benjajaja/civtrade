@@ -59,12 +59,21 @@ $forceNews = false;
 //Default: force
 $cityCheckType = "force";
 
+//timestamps
+//Enables/disabled timestamps.
+//Default: False
+$timestamps = false;
+
+//loginDelay
+//To prevent brute-force attempts, it's smart to have a delay on the page that processes logins/making accounts. Only affects the loginLogic.php page, not loading the login page. Measured in milliseconds.
+//This affects ALL login actions (creating accounts/changing passwords/logging in/updating settings/etc) - Anything that happens on $url/actions/loginLogic.php will have this delay.
+//Default: 1000
+$loginDelay = 1000;
+
 //////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                      //
-//                               === IMPORTANT ===                                      //
-//              Do not edit past this point unless you know what you're doing!          //
-//    If you do know what you're doing, feel free to edit. Don't foregt to submit a     //
-//                   pull request if you make an improvement!                           //
+//                         This is where the magic happens.                             //
+//     If you make any cool changes, please don't foregt to submit a pull request!      //
 //                     https://github.com/minicl55/civtrade                             //
 //                                                                                      //
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -81,7 +90,7 @@ if (isset($_COOKIE['user']))
     $stmt->execute();
     $result2=$stmt->get_result();
     $storedid = mysqli_fetch_row($result2)[0];
-    if ($userid != $storedid)
+    if (($userid != $storedid) or ($_COOKIE['user'] == 'guest'))
     {
         setcookie("user", "", time()-360000, "/", $url);
         setcookie("userID", "", time()-3600000, "/", $url);
@@ -91,50 +100,39 @@ if (isset($_COOKIE['user']))
     }
 }
 
-//Fake a 404 page
-function fake404() {
-    echo '<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
-    <html><head>
-    <title>404 Not Found</title>
-    </head><body>
-    <h1>Not Found</h1>
-    <p>The requested URL /'.basename($_SERVER['PHP_SELF']).' was not found on this server.</p>
-    <hr>
-    <address>Apache/2.2.22 (Debian) Server at civtrade.com Port 80</address>
-    </body></html>
-    ';
-    die (http_response_code(404));
-}
-
-
-//Level
+//Level and UserInfo
+//Default user:
+//INSERT INTO users (name,level,passhash,passid,verified,confcode,closed,staticnav) VALUES ('guest',0,'[password hash]','[password id]','n','[confcode]',0,0);
 if (isset($_COOKIE['user'])) {
-    $query = "SELECT * FROM users WHERE name=?";
-    $stmt = mysqli_stmt_init($con);
-    $stmt->prepare($query);
-    $stmt->bind_param('s', $_COOKIE['user']);
-    $stmt->execute();
-    $result2=$stmt->get_result();
-    $userInfo = mysqli_fetch_assoc($result2);
-	$level = $userInfo['level'];
-    $whiteNav = 'navbar-inverse';
-	if ($level == 3 and isset($_GET['level1'])) {
-		$level = 1;
-	}
+    $userToPull = $_COOKIE['user']; 
 }
 else {
-	$whiteNav = 'navbar-inverse';
-    $level = 0;
+    $userToPull = 'guest';
+}
+
+$query = "SELECT * FROM users WHERE name=?";
+$stmt = mysqli_stmt_init($con);
+$stmt->prepare($query);
+$stmt->bind_param('s', $userToPull);
+$stmt->execute();
+$result2=$stmt->get_result();
+$userInfo = mysqli_fetch_assoc($result2);
+$level = $userInfo['level'];
+if ($level == 3 and isset($_GET['level1'])) {
+    $level = 1;
 }
 
 //echo top
-
-header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Origin: *"); //the_gipsy wanted this for his API
 echo '<link rel="stylesheet" type="text/css" href="http://'.$url.'/other/stylenew.css?59">
-<head><title>CivTrade!</title></head><body class="body">
-<script src="http://code.jquery.com/jquery.js"></script>
+<head><title>CivTrade!</title></head>';
+if ($userInfo['staticnav'] != 1) { echo '<body class="body">'; }
+else { echo '<body class="bodystatic">'; }
+echo '<script src="http://code.jquery.com/jquery.js"></script>
 <script src="'.$url.'/other/bootstrap.js"></script>
-<nav class="navbar navbar-fixed-top '.$whiteNav.'" role="navigation">
+<nav class="navbar';
+if ($userInfo['staticnav'] != 1) { echo ' navbar-fixed-top'; }
+echo ' navbar-inverse" role="navigation">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -151,25 +149,25 @@ echo '<link rel="stylesheet" type="text/css" href="http://'.$url.'/other/stylene
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li><a href="/">Offers</a></li>
-        <li><a href="/control">UserCP</a></li>
-      </ul>';
+        <li><a href="/control">Control Panel</a></li>';
+      //If the user is logged in, echo PM, login and CP
         if (isset($_COOKIE['user'])) {
-            echo '<ul class="nav navbar-nav">
-            <li><a href="../actions/pm.php">PMs</a></li>
-            <li><a href="/actions/loginLogic.php?type=logout">Log out of '.$_COOKIE['user'].'</a></li></ul>';
+            echo '<li><a href="../actions/pm.php">Private Messages</a></li>
+            <li><a href="/actions/loginLogic.php?type=logout">Log out of '.$_COOKIE['user'].'</a></li>';
         }
+        //If user is NOT logged in, allow user to login
         else {
-            echo '<ul class="nav navbar-nav">
-            <li><a href="/control/login.php">Log in</a></li>
-            </ul>';
+            echo '<li><a href="/control/login.php">Log in</a></li>';
         }
+        //If superadmin, allow to view it as a level 1 user (for debugging)
 		if ($level == 3) {
-			echo '<ul class="nav navbar-nav">
-            <li><a href="./?level1">View as a level 1 user</a></li>
-            </ul>';
+			echo '<li><a href="./?level1">View as a level 1 user</a></li>';
 		}
-        echo '<ul class="nav navbar-nav"><li><a href="https://github.com/minicl55/civtrade">Now open-source!</a></li></ul>';
-    echo '</div><!-- /.navbar-collapse -->
+        //If the user does not want to show the "Now open source!" at the top
+        if ($userInfo['closed'] != 1) {
+            echo '<li><a href="https://github.com/minicl55/civtrade">Now open-source!</a></li>';
+        }
+    echo '</ul></div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>';
 
