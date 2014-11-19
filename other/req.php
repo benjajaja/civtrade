@@ -73,7 +73,7 @@ $loginDelay = 1000;
 //////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                      //
 //                         This is where the magic happens.                             //
-//     If you make any cool changes, please don't foregt to submit a pull request!      //
+//     If you make any cool changes, please don't forget to submit a pull request!      //
 //                     https://github.com/minicl55/civtrade                             //
 //                                                                                      //
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -102,7 +102,6 @@ if (isset($_COOKIE['user']))
 
 //Level and UserInfo
 //Default user:
-//INSERT INTO users (name,level,passhash,passid,verified,confcode,closed,staticnav) VALUES ('guest',0,'[password hash]','[password id]','n','[confcode]',0,0);
 if (isset($_COOKIE['user'])) {
     $userToPull = $_COOKIE['user']; 
 }
@@ -182,7 +181,7 @@ if ($news != "") {
 
 if (isset($_COOKIE['error'])) {
 //Echo error	
-	echo '<div align="center" class="alert alert-'.$_COOKIE['errortype'].' alert-dismissible" role="alert">'.$_COOKIE['error'].'</div>';
+	echo '<div align="center" style="width:99%;" class="center-block alert alert-'.$_COOKIE['errortype'].' alert-dismissible" role="alert">'.$_COOKIE['error'].'</div>';
 //Remove cookies 
 	setcookie("error", '', time()-360, "/", $url);
 	setcookie("errortype", '', time()-360, "/", $url);
