@@ -173,7 +173,7 @@
 				//Send PM
 				if ($row['poster'] != $_COOKIE['user']) { echo ' <a href="./actions/pm.php?postID='.$row['offerid'].'&to='.$row['poster'].'"><button type="button" class="btn btn-primary">Send user a PM</button></a> '; }
 				//If they ARE the poster, allow them to post directly to /r/civcraftexchange
-				else { echo ' <a href="https://www.reddit.com/r/CivcraftExchange/submit?selftext=true&title=[H]%20'.$row['have'].'%20[W]%20'.$row['want'].'&text=I%20live%20in%20'.$row['location'].'%0A%0D%0AI%20have%20'.$row['haveamt'].'%20'.$row['have'].'%20and%20'.$row['wantamt'].'%20'.$row['want'].'.%0D%0A%0D%0A'.$row['notes'].'%0A%0D%0A----%0A%0D%0A View%20this%20post%20on%20[CivTrade](http://civtrade.com/?id='.$row['offerid'].')" button type="button" class="btn btn-primary">Post to /r/CivcraftExchange</button></a> '; }
+				else if ($directPost) { echo ' <a href="https://www.reddit.com/r/CivcraftExchange/submit?selftext=true&title=[H]%20'.$row['have'].'%20[W]%20'.$row['want'].'&text=I%20live%20in%20'.$row['location'].'%0A%0D%0AI%20have%20'.$row['haveamt'].'%20'.$row['have'].'%20and%20'.$row['wantamt'].'%20'.$row['want'].'.%0D%0A%0D%0A'.$row['notes'].'%0A%0D%0A----%0A%0D%0A View%20this%20post%20on%20[CivTrade](http://civtrade.com/?id='.$row['offerid'].')" button type="button" class="btn btn-primary">Post to /r/CivcraftExchange</button></a> '; }
 				//If they're an admin OR they're the poster, allow them to deactivate it
 				if (($level >= 2 or $_COOKIE['user'] == $row['poster']) and $row['active'] == 'y') {
 					echo '<a href="./actions/remove.php?type=mark&id='.$row['offerid'].'"><button type="button" class="btn btn-warning">Mark inactive</button></a> ';

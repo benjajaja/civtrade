@@ -6,11 +6,11 @@
 //SQL Connection initlization 
 //HOST is usually 'localhost' with a VPS, if cPanel you'll USUALLY get an IP
 //Example: $con = mysqli_connect('localhost', 'notRoot', 'password123', 'civ');
-$con = mysqli_connect('HOST', 'USER', 'PASSWORD', 'DATABASE_NAME');
+$con = mysqli_connect('localhost', 'civ', 'C!Vu53r#1', 'civ');
 
 //URL - Set the BASE URL here. This includes ALL SUBDOMAINS.
 //Example: $url = "coolsite.freewebhosting.com";
-$url = "civtrade.com";
+$url = "beta.civtrade.com";
 
 //OPTIONAL settings. Keeping default values will make it as close to my website as possible
 //-----------------------------------------------------------------------------------------
@@ -69,6 +69,11 @@ $timestamps = false;
 //This affects ALL login actions (creating accounts/changing passwords/logging in/updating settings/etc) - Anything that happens on $url/actions/loginLogic.php will have this delay.
 //Default: 1000
 $loginDelay = 1000;
+
+//directPost
+//If true, users will be shown a button to post directly to /r/civcraftexchange on any posts they create. 
+//Nothing will stop them from making the post themselves, this is just convenience for the user
+$directPost = true;
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                      //
