@@ -1,5 +1,5 @@
 <?php
-require('/var/www/civ/other/req.php');
+require('/var/www/civbeta/other/req.php');
 //Random alphanumb generator
 
 //TODO: Make function in req to do this
@@ -14,11 +14,12 @@ for ($i = 0; $i < 12; $i++) {
   $rndAPI .= $characters[rand(0, strlen($characters) - 1)];
 }
 
+//Sleep for security purposes
+sleep($loginDelay / 1000);
+
 //Login part
 if ($_GET['type'] == 'login')
 {
-	//Sleep for security purposes
-	sleep($loginDelay / 1000);
     //Check if pass verifies
     
     //Get passhash
@@ -41,6 +42,13 @@ if ($_GET['type'] == 'login')
     {
         setcookie("user", $_POST['user'], time()+86400, "/", $url);
         setcookie("userID", $resultID[0], time()+86400, "/", $url);
+        if ($logSignupIP) {
+            $query = "UPDATE users SET lastip = ? WHERE name = ?";
+            $stmt = mysqli_stmt_init($con);
+            $stmt->prepare($query);
+            $stmt->bind_param('ss', $_SERVER['REMOTE_ADDR'], $_POST['user']);
+            $stmt->execute();
+        }
         errorOut("Successfully logged in", "success", "/control");
     }
     else {
@@ -68,19 +76,11 @@ else if ($_GET['type'] == 'signup') {
         if ($exists == false) {        
         //Create account
             $confCode = rand(10000,99999);
-			/*$query = "INSERT INTO users (name,level,passhash,passid,verified,rep,confcode) VALUES 
-            ('".$_POST['user']."',
-            1,'".
-            password_hash($_POST['pass'], PASSWORD_DEFAULT)."',".
-            $passID.", 
-            'n',
-             0,
-             ".$confCode.");";*/
-            $query = "INSERT INTO users (name,level,passhash,passid,verified,confcode) VALUES (?, 1, ?, '".$rnd."', 'n', '".$rndAPI."')";
+            $query = "INSERT INTO users (name,level,passhash,passid,verified,confcode,lastip,signupip) VALUES (?, 1, ?, '".$rnd."', 'n', '".$rndAPI."', ?, ?)";
             $stmt = mysqli_stmt_init($con);
             $stmt->prepare($query);
 			$newPass = password_hash($_POST['pass'], PASSWORD_DEFAULT);
-            $stmt->bind_param('ss', $_POST['user'], $newPass);
+            $stmt->bind_param('ssss', $_POST['user'], $newPass, $_SERVER['REMOTE_ADDR'], $_SERVER['REMOTE_ADDR']);
             $stmt->execute();
             setcookie("user", $_POST['user'], time()+86400, "/", $url);
             setcookie("userID", $rnd, time()+86400, "/", $url);

@@ -6,11 +6,11 @@
 //SQL Connection initlization 
 //HOST is usually 'localhost' with a VPS, if cPanel you'll USUALLY get an IP
 //Example: $con = mysqli_connect('localhost', 'notRoot', 'password123', 'civ');
-$con = mysqli_connect('localhost', 'civ', 'C!Vu53r#1', 'civ');
+$con = mysqli_connect('HOST', 'USER', 'PASSWORD', 'DATABASE_NAME');
 
 //URL - Set the BASE URL here. This includes ALL SUBDOMAINS.
 //Example: $url = "coolsite.freewebhosting.com";
-$url = "beta.civtrade.com";
+$url = "civtrade.com";
 
 //OPTIONAL settings. Keeping default values will make it as close to my website as possible
 //-----------------------------------------------------------------------------------------
@@ -74,6 +74,16 @@ $loginDelay = 1000;
 //If true, users will be shown a button to post directly to /r/civcraftexchange on any posts they create. 
 //Nothing will stop them from making the post themselves, this is just convenience for the user
 $directPost = true;
+
+//logSignupIP
+//If true, logs the signup IP. This can never be overwritten by the user and must be manually overwritten by someone with access to the MySQL database
+//Default: true
+$logSignupIP = true;
+
+//logLoginIP
+//If true, logs the IP the user last logged in with. This is overwritten every time the user logs in
+//Default: true
+$logLoginIP = true;
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                      //
@@ -152,21 +162,17 @@ echo ' navbar-inverse" role="navigation">
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li><a href="/">Offers</a></li>
-        <li><a href="/control">Control Panel</a></li>';
+        <li><a href="/">Offers</a></li>';
       //If the user is logged in, echo PM, login and CP
         if (isset($_COOKIE['user'])) {
             echo '<li><a href="../actions/pm.php">Private Messages</a></li>
+			<li><a href="/control">Control Panel</a></li>
             <li><a href="/actions/loginLogic.php?type=logout">Log out of '.$_COOKIE['user'].'</a></li>';
         }
         //If user is NOT logged in, allow user to login
         else {
-            echo '<li><a href="/control/login.php">Log in</a></li>';
+            echo '<li><a href="/control/login.php">Log in or signup</a></li>';
         }
-        //If superadmin, allow to view it as a level 1 user (for debugging)
-		if ($level == 3) {
-			echo '<li><a href="./?level1">View as a level 1 user</a></li>';
-		}
         //If the user does not want to show the "Now open source!" at the top
         if ($userInfo['closed'] != 1) {
             echo '<li><a href="https://github.com/minicl55/civtrade">Now open-source!</a></li>';
@@ -186,7 +192,7 @@ if ($news != "") {
 
 if (isset($_COOKIE['error'])) {
 //Echo error	
-	echo '<div align="center" style="width:99%;" class="center-block alert alert-'.$_COOKIE['errortype'].' alert-dismissible" role="alert">'.$_COOKIE['error'].'</div>';
+	echo '<div align="center" style="width:95%;" class="center-block alert alert-'.$_COOKIE['errortype'].' alert-dismissible" role="alert">'.$_COOKIE['error'].'</div>';
 //Remove cookies 
 	setcookie("error", '', time()-360, "/", $url);
 	setcookie("errortype", '', time()-360, "/", $url);
@@ -233,7 +239,7 @@ if ($warnOnIE) {
 }
 
 //CheckToken
-if (getcwd() == '/var/www/civ/api') {
+if (getcwd() == '/var/www/civ/api' or getcwd() == '/var/www/civbeta/api') {
     //Clean the echo'd stuff in the file
     ob_end_clean();
     header('Content-Type: application/json'); //Set header
@@ -252,7 +258,7 @@ if (getcwd() == '/var/www/civ/api') {
         if ($row['verified'] != 'y') { die('Invalid API token OR your account is not verified OR your API token has been suspended'); }
     }
     //Log
-    if ($logAPIRequests) {
+    if ($logAPIRequests and $requireAPIToken) {
         $query = "INSERT INTO api (token, loc, time, page) VALUES (?, ?, NOW(), ?);";
         $stmt = mysqli_stmt_init($con);
         $stmt->prepare($query);
