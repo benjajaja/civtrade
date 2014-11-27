@@ -36,6 +36,8 @@ This API takes no argruemnts.
 
 If you're getting the error `Invalid API token OR your account is not verified OR your API token has been suspended`, you have an invalid API token, your account isn't verified or your API token has been suspended. PM me on reddit if you have any troubles.
 
+Anyone can opt-out of this by going to the User Control Panel and checking "Keep me anonymous in any API". Your total posts will still be reflected in the result, but you will be lumped with everyone else who wants to be anonymous (the name will be "anonymous")
+
 ***If you need an API made, tell me. The reason there's only two right now is because those are the only two that have been requested. I'm very open to making new ones to meet someone's specific needs***
 
 ----
@@ -72,6 +74,14 @@ All users may now post directly to /r/CivcraftExchange with the push of a button
 
 ----
 
+**New PM system:**
+
+I re-did the PM system from scratch. It looks [somewaht similar](https://i.imgur.com/MzqaRQn.png) but the backend has been changed a lot.
+
+Sending a PM is simple, just fill in the to and message fields.  
+
+----
+
 **New semi-important stuff:**
 
 - Added settings
@@ -88,13 +98,13 @@ All users may now post directly to /r/CivcraftExchange with the push of a button
 
 - Added a way to reset your password (just log on to CivCraft and type /msg gastriko register resetpw)
 
-- PM system has been taken down, just for a little bit. For now, use reddit messaging.
-
 - Fixed a few issues with items not returning values
 
 - City names now must match a city on Txapu
 
 - Added a new button to post directly to /r/CivCraftExchange
+
+- Added option to be anonymous
 
 ----
 
