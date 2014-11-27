@@ -76,7 +76,13 @@ All users may now post directly to /r/CivcraftExchange with the push of a button
 
 I re-did the PM system from scratch. It looks [somewaht similar](https://i.imgur.com/MzqaRQn.png) but the backend has been changed a lot.
 
-Sending a PM is simple, just fill in the to and message fields.  
+Sending a PM is simple, just fill in the to and message fields. 
+
+When viewing your PMs, you might notice that some PMs look different. This is because [when you are the sender, they are dark blue](https://i.imgur.com/KYnKPRp.png). However, [if you're the receiver, they're light blue](https://i.imgur.com/wTrEFUV.png)
+
+If you get a new PM, you'll see a banner at the top of every page that looks [like this](https://i.imgur.com/YiAcp5Z.png). Clicking on that link will bring you to the PM page.
+
+Once you load the page, all PMs are marked as read. However, this logic is preformed *after* the page is constructed, so you'll be able to see the difference between [unread PMs](The first time you load the page, you'll be able https://i.imgur.com/tYRM7r7.png) and [read PMs](https://i.imgur.com/3QsShGx.png). Additionally, the sender will be able to see the status of your message at any time. If it's unread, it will say unread in bold letters, [like this](https://i.imgur.com/Y20dvWH.png).
 
 ----
 
@@ -101,8 +107,6 @@ Sending a PM is simple, just fill in the to and message fields.
 - City names now must match a city on Txapu
 
 - Added a new button to post directly to /r/CivCraftExchange
-
-- Added option to be anonymous
 
 ----
 
