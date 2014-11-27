@@ -48,19 +48,19 @@ To show how auctions work, I will make one and document it.
 
 First, fill in all the fields in the new offer box, [like this](https://i.imgur.com/8FzS0dX.png) and click "create auction"
 
-The card will look like [this](https://i.imgur.com/kkSgdeq.png), which is slightly different than a [non auction card](https://i.imgur.com/vxgrE1s.png). You are automatically set to the last bidder.
+The card will look like [this](https://i.imgur.com/5MuwMoo.png), which is slightly different than a [non auction card](https://i.imgur.com/TrhyXCd.png). You are automatically set to the last bidder with the highest bid the starting value you put in the create new post panel.
 
-Now, anyone can bid on your auction. [This is a picture of what it looks like to people other than the poster](https://i.imgur.com/Fe2pwlO.png). 
+Now, anyone can bid on your auction. [This is a picture of what it looks like to people other than the poster](https://i.imgur.com/M3LmXtA.png). 
 
-If you want to bid on an auction, click "increase bid by [amount] [item]". [This is a picture of what happened after I clicked the bid button on my alt](https://i.imgur.com/X1PGPbD.png)
+If you want to bid on an auction, click "increase bid by [amount] [item]". [This is a picture of what happened after I clicked the bid button on my alt](https://i.imgur.com/axho45R.png)
 
 Three things you should notice:
 
 1) The current price went up by 3
 
-2) The newest bidder was changed to my alt (minicl66). Additionally, because this account is unverified, a **unverified** tag was added to the name
+2) The newest bidder was changed to my alt (minicl66). Additionally, because this account is unverified, a bold unverified tag was added to the name
 
-3) I can no longer click the button, as I am the top bidder.
+3) I can no longer click the button on my alt, as I am the top bidder.
 
 To end the auction, log in as the poster and click "Mark inactive". An auction can be brought back at any time by clicking "Show your inactive posts" and clicking "mark active"
 
@@ -68,7 +68,9 @@ To end the auction, log in as the poster and click "Mark inactive". An auction c
 
 **Post directly to /r/CivcraftExchange**
 
-All users may now post directly to /r/CivcraftExchange with the push of a button. This just opens up a tab with the information pre-set in the title/message box, the user must still click submit new post.
+All users may now post directly to /r/CivcraftExchange with the push of a button.
+
+This just opens up a tab with the information pre-set in the title/message box, the user must still click submit new post.
 
 ----
 
@@ -78,11 +80,13 @@ I re-did the PM system from scratch. It looks [somewaht similar](https://i.imgur
 
 Sending a PM is simple, just fill in the to and message fields. 
 
-When viewing your PMs, you might notice that some PMs look different. This is because [when you are the sender, they are dark blue](https://i.imgur.com/KYnKPRp.png). However, [if you're the receiver, they're light blue](https://i.imgur.com/wTrEFUV.png)
+When viewing your PMs, you might notice that some panels look different. This is because [when you are the sender, they are dark blue](https://i.imgur.com/KYnKPRp.png). However, [if you're the receiver, they're light blue](https://i.imgur.com/wTrEFUV.png)
 
 If you get a new PM, you'll see a banner at the top of every page that looks [like this](https://i.imgur.com/YiAcp5Z.png). Clicking on that link will bring you to the PM page.
 
-Once you load the page, all PMs are marked as read. However, this logic is preformed *after* the page is constructed, so you'll be able to see the difference between [unread PMs](The first time you load the page, you'll be able https://i.imgur.com/tYRM7r7.png) and [read PMs](https://i.imgur.com/3QsShGx.png). Additionally, the sender will be able to see the status of your message at any time. If it's unread, it will say unread in bold letters, [like this](https://i.imgur.com/Y20dvWH.png).
+Once you load the page, all PMs are marked as read. However, this logic is preformed *after* the page is constructed, so you'll be able to see the difference between [unread PMs](https://i.imgur.com/tYRM7r7.png) and [read PMs](https://i.imgur.com/3QsShGx.png). Additionally, the sender will be able to see the status of your message at any time. If it's unread, it will say unread in bold letters, [like this](https://i.imgur.com/Y20dvWH.png).
+
+Auctions have a [slightly different button for the poster to post the highest bidder](https://i.imgur.com/BLlL1dK.png)
 
 ----
 
@@ -90,11 +94,11 @@ Once you load the page, all PMs are marked as read. However, this logic is prefo
 
 - Added settings
 
-  - A new [settings panel](https://i.imgur.com/gJMi5Yq.png) has been added to the user control panel page. Currently the only two options are to lock the navbar and remove the "Now open source!" href from the navbar, but if anyone wants more options, just tell me and I'll add it.
+  - A new [settings panel](https://i.imgur.com/gJMi5Yq.png) has been added to the user control panel page. Currently the only two options are to lock the navbar (for smalls screens) and remove the "Now open source!" href from the navbar, but if anyone wants another option, just tell me and I'll add it.
   
   - Both settings default to false and are false for any user not logged in.
 
-- Removed relative timestamps. And non-relative timestamps. Actually, the entire post info thing has been removed.
+- Removed timestamps. The entire post info thing has been removed to give panels a cleaner feel.
 
 - Added new API
 
