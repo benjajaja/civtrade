@@ -36,8 +36,6 @@ This API takes no argruemnts.
 
 If you're getting the error `Invalid API token OR your account is not verified OR your API token has been suspended`, you have an invalid API token, your account isn't verified or your API token has been suspended. PM me on reddit if you have any troubles.
 
-Anyone can opt-out of this by going to the User Control Panel and checking "Keep me anonymous in any API". Your total posts will still be reflected in the result, but you will be lumped with everyone else who wants to be anonymous (the name will be "anonymous")
-
 ***If you need an API made, tell me. The reason there's only two right now is because those are the only two that have been requested. I'm very open to making new ones to meet someone's specific needs***
 
 ----
