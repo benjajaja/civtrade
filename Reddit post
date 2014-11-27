@@ -1,0 +1,46 @@
+Title: New CivTrade API + Auctions + Lots of random updates
+
+**Before we get to the main points...**
+
+/u/Eeazt made a [fantastic comment](https://www.reddit.com/r/Civcraft/comments/2l01n6/civtrade_is_now_open_source_last_30_hours_of/clqucvw) a little bit ago:
+
+>I'll absolutely be using this from now on **provided we can maneuver a mass transition from civcraftexchange over here.**
+
+(Emphasis mine)
+
+I'd like to ask you guys, what would it take to make a migration? As far as I can tell the only downside to CivTrade over /r/CivcraftExchange is the amount of people using the subreddit.
+
+I'm only making this because I truly think it's a better alternative. I don't have ads, I don't charge diamonds for stickied posts, etc... It's all because I truly think we can make something better. 
+
+**TL;DR: What would it take to make you move to CivTrade?**
+
+----
+
+**Links:**
+
+[CivTrade](http://civtrade.com)
+
+[GitHub repo](https://github.com/minicl55/civtrade)
+
+----
+
+**New API:**
+
+I added a new API. You still must be verified to use it (verification takes about 10 seconds, if anyone needs help just PM me or post here).
+
+The new API is located at http://civtrade.com/api/userPosts.php. You need your API token to view it. An API token can be accesed at any time by logging in to the control panel and scrolling all the way down to the [API Information panel](http://i.imgur.com/0H3gNm1.png)
+
+This page returns a list of all users that have posted at least once, and their total posts. Currently, it returns:
+
+`[{"name":"dx_dt","amount":9},{"name":"minicl55","amount":4},{"name":"Higgenbottoms","amount":3},{"name":"GipsyKing","amount":2},{"name":"Darcour","amount":2},{"name":"dekecoy","amount":1},{"name":"wildman01","amount":1},{"name":"agentnola","amount":1},{"name":"iPublicFriendemy","amount":1},{"name":"NetherQuit","amount":1},{"name":"BlazinGoliath","amount":1},{"name":"72Volt","amount":1},{"name":"597","amount":1},{"name":"assassin_scooby","amount":1},{"name":"MonsieurWTF","amount":1},{"name":"comicguyben","amount":1},{"name":"cwdeathsword","amount":1},{"name":"IronicChef","amount":1},{"name":"TealNerd","amount":1},{"name":"sintralin","amount":1}]`
+
+This API takes no argruemnts. 
+
+If you're getting the error `Invalid API token OR your account is not verified OR your API token has been suspended`, you have an invalid API token, your account isn't verified or your API token has been suspended. PM me on reddit if you have any troubles.
+
+***If you need an API made, tell me. The reason there's only one right now is because that's the only one that's been requested. I'm very open to making new ones to meet someone's specific needs***
+
+----
+
+**Auctions:**
+
