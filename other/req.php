@@ -39,7 +39,7 @@ $logAPIRequests = true;
 //news
 //This will be displayed in an alert (The things that show when you see "Successfully logged in", etc) at the top of every page, provided there is no other notice
 //If empty, no news will be displayed
-//Default: Empty ("" or '')
+//Default: Empty ("" or ''), NOT null
 $news = "";
 
 //newsType
@@ -67,8 +67,8 @@ $timestamps = false;
 //loginDelay
 //To prevent brute-force attempts, it's smart to have a delay on the page that processes logins/making accounts. Only affects the loginLogic.php page, not loading the login page. Measured in milliseconds.
 //This affects ALL login actions (creating accounts/changing passwords/logging in/updating settings/etc) - Anything that happens on $url/actions/loginLogic.php will have this delay.
-//Default: 1000
-$loginDelay = 1000;
+//Default: 250
+$loginDelay = 250;
 
 //directPost
 //If true, users will be shown a button to post directly to /r/civcraftexchange on any posts they create. 
@@ -136,6 +136,7 @@ if ($level == 3 and isset($_GET['level1'])) {
     $level = 1;
 }
 
+
 //echo top
 header("Access-Control-Allow-Origin: *"); //the_gipsy wanted this for his API
 echo '<link rel="stylesheet" type="text/css" href="http://'.$url.'/other/stylenew.css?59">
@@ -152,9 +153,6 @@ echo ' navbar-inverse" role="navigation">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
         <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" href="/">CivTrade</a>
     </div>
@@ -184,7 +182,7 @@ echo ' navbar-inverse" role="navigation">
 //News
 if ($news != "") {
     if ($forceNews or !isset($_COOKIE['error'])) {
-        echo '<div align="center" class="alert alert-'.$newsType.' alert-dismissible" role="alert">'.$news.'</div>';
+        alert($news, $newsType);
     }
 }
 
@@ -192,7 +190,7 @@ if ($news != "") {
 
 if (isset($_COOKIE['error'])) {
 //Echo error	
-	echo '<div align="center" style="width:95%;" class="center-block alert alert-'.$_COOKIE['errortype'].' alert-dismissible" role="alert">'.$_COOKIE['error'].'</div>';
+    alert($_COOKIE['error'], $_COOKIE['errortype']);
 //Remove cookies 
 	setcookie("error", '', time()-360, "/", $url);
 	setcookie("errortype", '', time()-360, "/", $url);
@@ -211,12 +209,10 @@ function errorOut($error, $type = "info", $rel = "/")
 	exit;
 }
 
-//redir()
+//alert()
 
-function redir($location)
-{
-    header( "Location: ".$location);
-	exit;
+function alert($error, $type = "danger") {
+    echo '<div align="center" class="alert alert-'.$type.' alert-dismissible center-block" role="alert" style="width:97%;">'.$error.'</div>';
 }
 
 //Framebreaker
@@ -269,5 +265,19 @@ if (getcwd() == '/var/www/civ/api' or getcwd() == '/var/www/civbeta/api') {
         $result2=$stmt->get_result();
     }
 }
+
+//Set user
+if (isset($_COOKIE['user'])) { $u = $_COOKIE['user']; }
+else { $u = 'n'; }
+
+//Check PMs
+
+$query = "SELECT * FROM pms WHERE (sender = ? OR receiver = ?) AND unread = 1";
+$stmt = mysqli_stmt_init($con);
+$stmt->prepare($query);
+$stmt->bind_param('ss', $u, $u);
+$stmt->execute();
+$result2=$stmt->get_result();
+if (mysqli_num_rows($result2) != 0 and $_SERVER['PHP_SELF'] != '/actions/viewpm.php') { alert('You have a new PM! <a href="http://'.$url.'/actions/viewpm.php">Click here to view it!</a>', 'info'); }
 
 ?>

@@ -60,7 +60,8 @@ if ($_GET['type'] == 'login')
 
 else if ($_GET['type'] == 'signup') {
 	if (strlen($_POST['pass']) >= 8 and ($_POST['pass'] == $_POST['passConfirm'])) {
-        
+        //Remove HTML tags from username
+        $_POST['user'] = strip_tags($_POST['user']);
         //Check if exists
         $exists = false;
         $query = "SELECT name FROM users WHERE name LIKE ?";

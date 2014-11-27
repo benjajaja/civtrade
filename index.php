@@ -21,7 +21,7 @@
 	
 	//Logic for ID
 	if (isset($_GET['id'])) {
-		echo '<div align="center" style="width:95%;" class="center-block alert alert-info alert-dismissible" role="alert">You have been linked directly to post ID '.$_GET['id'].'. <a href="/">View all offers</a>.</div>';
+        alert('You have been linked directly to post ID '.$_GET['id'].'. <a href="/">View all offers</a>.', 'info');
 		$query = ("SELECT * FROM offers WHERE active='y' AND offerid=? ORDER BY offerid DESC");
 		$stmt = mysqli_stmt_init($con);
 		$stmt->prepare($query);
@@ -196,7 +196,7 @@
 				//If auction, increase last bid
 				if ($row['aucinc'] !== null and $row['poster'] != $_COOKIE['user'] and $row['lastbidder'] != $_COOKIE['user']) { echo '<a button type="button" class="btn btn-primary" href="http://'.$url.'/actions/incAuc.php?id='.$row['offerid'].'">Increase bid by '.$row['aucinc'].' '.$row['want'].'</a> '; }
 				//Send PM
-				//if ($row['poster'] != $_COOKIE['user']) { echo ' <a href="./actions/pm.php?postID='.$row['offerid'].'&to='.$row['poster'].'"><button type="button" class="btn btn-primary">Send user a PM</button></a> '; }
+				if ($row['poster'] != $_COOKIE['user']) { echo ' <a href="./actions/viewpm.php?to='.$row['poster'].'"><button type="button" class="btn btn-primary">Send user a PM</button></a> '; }
 				//If they ARE the poster, allow them to post directly to /r/civcraftexchange
 				if ($directPost and $row['poster'] == $_COOKIE['user']) { echo ' <a href="'.$redditPost.'" button type="button" class="btn btn-primary">Post to /r/CivcraftExchange</button></a> '; }
 				//If they're an admin OR they're the poster, allow them to deactivate it
@@ -204,8 +204,8 @@
 					echo '<a href="./actions/remove.php?type=mark&id='.$row['offerid'].'"><button type="button" class="btn btn-warning">Mark inactive</button></a> ';
 				}
 				
-				//If it's me, delete it
-				if ($level == 3)
+				//If it's me and this is a direct link, delete it
+				if ($level == 3 and isset($_GET['id']))
 				{
 					echo '<a href="./actions/remove.php?type=delete&id='.$row['offerid'].'"><button type="button" class="btn btn-danger">Delete</button></a>';
 				}

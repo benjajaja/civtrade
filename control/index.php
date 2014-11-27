@@ -3,7 +3,7 @@ require('/var/www/civ/other/req.php');
 
 //Only let logged in users view this page
 if (!isset($_COOKIE['user'])) {
-    redir('login.php');
+    errorOut('You must be logged in to view this page', 'danger', '/login.php');
 }
 
 //If unverified
@@ -21,15 +21,6 @@ if ($userInfo['verified'] == 'n') {
 		
     </div>';
 }
-
-//Show auction
-//TODO: Make this actually work instead of doing nothing
-echo '<script type="text/javascript">
-
-    var post = document.getElementById(\'auc\');
-    post.style.display = \'none\';
-
-</script>';
 
 //New post
 echo '<div class="panelControl panel-primary">
@@ -69,14 +60,13 @@ echo '<div class="panelControl panel-primary">
 	echo '<form method="POST" class="form-inline;" action="../actions/loginLogic.php?type=changepw"> <div class="form-group"> 
 		<div class="form-group"><input type="password" class="form-control" name="newPass" placeholder="New password"></div> 
 		<div class="form-group"><input type="password" class="form-control" name="newPassConf" placeholder="Confirm"></div> 
-		<button type="submit" class="btn btn-info">Submit</button></form></div></div></div>';
+		<button type="submit" class="btn btn-primary">Submit</button></form></div></div></div>';
 
 //API
-
 if ($userInfo['verified'] == 'y') {
-echo '<div class="panelControl panel-info"><!--Currently in public beta, requires a verified account. -->
+echo '<div class="panelControl panel-info">
 	<div class="panel-heading"><font size="5">API</font></div>
-	<div class="panel-body"><b>Your API code: '.$userInfo['confcode'].'</b><br>
+	<div class="panel-body">Your API code: '.$userInfo['confcode'].'<b> - Do not share this code! It is linked to your account and logged</b><br>
 	All API requests are logged and require your API code. Append them to the API url with ?token='.$userInfo['confcode'].'<br><br>
 	All APIs currently:<br>
 	<a href="http://'.$url.'/api/cities.php?token='.$userInfo['confcode'].'">http://'.$url.'/api/cities.php</a> returns a list of cities and the total number of offers available<br>

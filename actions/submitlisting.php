@@ -10,7 +10,8 @@
 			$_POST['want'] = rtrim($_POST['want'], 's');
 			$_POST['have'] = rtrim($_POST['have'], 's');
 			$_POST['have'] = strip_tags($_POST['have']);
-			$_POST['want'] = strip_tags($_POST['want']);
+			$_POST['loc'] = strip_tags($_POST['loc']);
+            $_POST['notes'] = strip_tags($_POST['notes']);
 			if ($_POST['have'] != '' and $_POST['want'] != '' and $_POST['loc'] != '' and is_numeric($_POST['amountHave']) and is_numeric($_POST['amountWant']) and $_POST['amountWant'] >= 0 and $_POST['amountHave'] >= 0) {
 				if ($_POST['mininc'] != null) {
 					$query = "INSERT INTO offers (poster,have,haveamt,want,wantamt,notes,active,location,creation, aucinc, lastbidder) VALUES(?, ?, ?, ?, ?, ?, 'y', ?, NOW(), ?, ?)";
