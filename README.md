@@ -1,6 +1,6 @@
 #CivTrade
 
-========
+----
 
 For my website, [http://civtrade.com](CivTrade)
 
