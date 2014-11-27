@@ -1,4 +1,0 @@
-AuthType Basic
-AuthName "Beta password required"
-AuthUserFile /.htpasswd
-Require valid-user
