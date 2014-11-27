@@ -44,3 +44,27 @@ If you're getting the error `Invalid API token OR your account is not verified O
 
 **Auctions:**
 
+A brand new feature has been added, auctions! Auctions are simple to set up. The old "create new post" system has been [slightly upgraded](https://i.imgur.com/GA1DuvH.png). A new field has been added to the bottom, "minimum auction increase".
+
+To show how auctions work, I will make one and document it.
+
+First, fill in all the fields in the new offer box, [like this](https://i.imgur.com/8FzS0dX.png) and click "create auction"
+
+The card will look like [this](https://i.imgur.com/kkSgdeq.png), which is slightly different than a [non auction card](https://i.imgur.com/vxgrE1s.png). You are automatically set to the last bidder.
+
+Now, anyone can bid on your auction. [This is a picture of what it looks like to people other than the poster](https://i.imgur.com/Fe2pwlO.png). 
+
+If you want to bid on an auction, click "increase bid by [amount] [item]". [This is a picture of what happened after I clicked the bid button on my alt](https://i.imgur.com/X1PGPbD.png)
+
+Three things you should notice:
+
+1) The current price went up by 3
+
+2) The newest bidder was changed to my alt (minicl66). Additionally, because this account is unverified, a **unverified** tag was added to the name
+
+3) I can no longer click the button, as I am the top bidder.
+
+To end the auction, log in as the poster and click "Mark inactive". An auction can be brought back at any time by clicking "Show your inactive posts" and clicking "mark active"
+
+----
+
