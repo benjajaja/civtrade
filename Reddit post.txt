@@ -1,5 +1,3 @@
-Title: New CivTrade API + Auctions + Lots of random updates
-
 **Before we get to the main points...**
 
 /u/Eeazt made a [fantastic comment](https://www.reddit.com/r/Civcraft/comments/2l01n6/civtrade_is_now_open_source_last_30_hours_of/clqucvw) a little bit ago:
@@ -38,7 +36,7 @@ This API takes no argruemnts.
 
 If you're getting the error `Invalid API token OR your account is not verified OR your API token has been suspended`, you have an invalid API token, your account isn't verified or your API token has been suspended. PM me on reddit if you have any troubles.
 
-***If you need an API made, tell me. The reason there's only one right now is because that's the only one that's been requested. I'm very open to making new ones to meet someone's specific needs***
+***If you need an API made, tell me. The reason there's only two right now is because those are the only two that have been requested. I'm very open to making new ones to meet someone's specific needs***
 
 ----
 
@@ -74,15 +72,13 @@ All users may now post directly to /r/CivcraftExchange with the push of a button
 
 ----
 
-----
-
 **New semi-important stuff:**
 
 - Added settings
 
-  A new [settings panel](https://i.imgur.com/gJMi5Yq.png) has been added to the user control panel page. Currently the only two options are to lock the navbar and remove the "Now open source!" href from the navbar, but if anyone wants more options, just tell me and I'll add it.
+  - A new [settings panel](https://i.imgur.com/gJMi5Yq.png) has been added to the user control panel page. Currently the only two options are to lock the navbar and remove the "Now open source!" href from the navbar, but if anyone wants more options, just tell me and I'll add it.
   
-  Both settings default to false and are false for any user not logged in.
+  - Both settings default to false and are false for any user not logged in.
 
 - Removed relative timestamps. And non-relative timestamps. Actually, the entire post info thing has been removed.
 
@@ -92,7 +88,7 @@ All users may now post directly to /r/CivcraftExchange with the push of a button
 
 - Added a way to reset your password (just log on to CivCraft and type /msg gastriko register resetpw)
 
-- PM system has been taken down, just for a little bit. for now, use reddit messaging.
+- PM system has been taken down, just for a little bit. For now, use reddit messaging.
 
 - Fixed a few issues with items not returning values
 
