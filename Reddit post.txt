@@ -68,3 +68,38 @@ To end the auction, log in as the poster and click "Mark inactive". An auction c
 
 ----
 
+**Post directly to /r/CivcraftExchange**
+
+All users may now post directly to /r/CivcraftExchange with the push of a button. This just opens up a tab with the information pre-set in the title/message box, the user must still click submit new post.
+
+----
+
+----
+
+**New semi-important stuff:**
+
+- Added settings
+
+  A new [settings panel](https://i.imgur.com/gJMi5Yq.png) has been added to the user control panel page. Currently the only two options are to lock the navbar and remove the "Now open source!" href from the navbar, but if anyone wants more options, just tell me and I'll add it.
+  
+  Both settings default to false and are false for any user not logged in.
+
+- Removed relative timestamps. And non-relative timestamps. Actually, the entire post info thing has been removed.
+
+- Added new API
+
+- Added auctions
+
+- Added a way to reset your password (just log on to CivCraft and type /msg gastriko register resetpw)
+
+- PM system has been taken down, just for a little bit. for now, use reddit messaging.
+
+- Fixed a few issues with items not returning values
+
+- City names now must match a city on Txapu
+
+- Added a new button to post directly to /r/CivCraftExchange
+
+----
+
+***I really want some suggestions for stuff to work on, please let me know if you have any, even if you don't know how to code it, please let me know and I'll do it!***
