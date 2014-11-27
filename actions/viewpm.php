@@ -47,9 +47,9 @@ while ($row = $result2->fetch_assoc()) {
 
 //Mark PMs as read
 
-$query = "UPDATE pms SET unread = 0 WHERE sender = ? OR receiver LIKE ? ORDER BY id DESC";
+$query = "UPDATE pms SET unread = 0 WHERE receiver LIKE ? ORDER BY id DESC";
 $stmt = mysqli_stmt_init($con);
 $stmt->prepare($query);
-$stmt->bind_param('ss', $u, $u);
+$stmt->bind_param('s', $u);
 $stmt->execute();
 ?>

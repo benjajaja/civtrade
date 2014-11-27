@@ -3,7 +3,7 @@ require('/var/www/civ/other/req.php');
 
 //Only let logged in users view this page
 if (!isset($_COOKIE['user'])) {
-    errorOut('You must be logged in to view this page', 'danger', '/login.php');
+    errorOut('You must be logged in to view this page', 'danger', '/control/login.php');
 }
 
 //If unverified

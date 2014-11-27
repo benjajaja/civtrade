@@ -163,8 +163,8 @@ echo ' navbar-inverse" role="navigation">
         <li><a href="/">Offers</a></li>';
       //If the user is logged in, echo PM, login and CP
         if (isset($_COOKIE['user'])) {
-            //echo '<li><a href="../actions/pm.php">Private Messages</a></li>
 			echo '<li><a href="/control">Control Panel</a></li>
+			<li><a href="/actions/viewpm.php">Private messages</a></li>
             <li><a href="/actions/loginLogic.php?type=logout">Log out of '.$_COOKIE['user'].'</a></li>';
         }
         //If user is NOT logged in, allow user to login

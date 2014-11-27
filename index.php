@@ -1,5 +1,5 @@
 <?php
-	require('/var/www/civ/other/req.php');
+	require('/var/www/civbeta/other/req.php');
 	
 	//Search
 	if (!isset($_GET['id'])) {
@@ -195,6 +195,8 @@
 			if (isset($_COOKIE['user'])) {
 				//If auction, increase last bid
 				if ($row['aucinc'] !== null and $row['poster'] != $_COOKIE['user'] and $row['lastbidder'] != $_COOKIE['user']) { echo '<a button type="button" class="btn btn-primary" href="http://'.$url.'/actions/incAuc.php?id='.$row['offerid'].'">Increase bid by '.$row['aucinc'].' '.$row['want'].'</a> '; }
+                //Send PM to highest bidder
+                if ($row['poster'] == $u and $row['lastbidder'] != $u) { echo ' <a href="./actions/viewpm.php?to='.$row['lastbidder'].'"><button type="button" class="btn btn-primary">Send highest bidder a PM</button></a> '; }
 				//Send PM
 				if ($row['poster'] != $_COOKIE['user']) { echo ' <a href="./actions/viewpm.php?to='.$row['poster'].'"><button type="button" class="btn btn-primary">Send user a PM</button></a> '; }
 				//If they ARE the poster, allow them to post directly to /r/civcraftexchange
