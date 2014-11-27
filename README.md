@@ -1,7 +1,5 @@
 #CivTrade
 
-----
-
 For my website, [http://civtrade.com](CivTrade)
 
 If you need a less restricive licence, let me know. We can talk and I'll work with you.
