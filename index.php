@@ -10,8 +10,9 @@
 			<input type="text" name="want" class="form-control" placeholder="I want">
 			<input type="text" name="have" class="form-control" placeholder="I have">
 			<input type="text" name="loc" class="form-control" placeholder="Location (full city name)">
-			<button type="submit" class="btn btn-default">Search</button></form>
-			<a href="../?showOwnDisabled"><button class="btn btn-primary">Show your inactive posts</button></a>';
+			<button type="submit" class="btn btn-default">Search</button></form>';
+			//If logged in, allow users to view this disabled posts
+            if (isset($_COOKIE['user'])) { echo '<a href="../?showOwnDisabled"><button class="btn btn-primary">Show your inactive posts</button></a>'; }
 		if ($level == 3) {
 			echo ' <a href="../?showAllDisabled"><button class="btn btn-info">Show all inactive posts</button></a>';
 		}
@@ -37,7 +38,7 @@
 				$query = "SELECT * FROM offers WHERE active='n' ORDER BY offerid DESC";
 			}
 			else {
-				errorOut('You do not have the required permission VIEW_ALL_INACTIVE to view this page', "danger");
+				errorOut('You do not have permission to view this page', "danger");
 			}
 		}
 		
@@ -152,19 +153,36 @@
 				//Hour:Minute Month/day/year
 				echo 'Offer ID: '.$row['offerid'].', posted '.date("H:i m/d/y", strtotime($row['creation']));
 			}
-			echo '<div class="panel-heading"><font size="5">'.$row['poster'].' ('.$verifiedText.')</font></div>
+			
+			if ($row['aucinc'] !== null) { 
+				$aucText = ' - <b>Auction</b>'; 
+				$aucVal = '<b>Current bid:</b>';
+			}
+			else {
+				$aucText = ''; 
+				$aucVal = '<b>Wants:</b>';
+			}
+			
+			echo '<div class="panel-heading"><font size="5">'.$row['poster'].' ('.$verifiedText.')'.$aucText.'</font></div>
 			<div class="panel-body">';
 			
 			//Replace 0 with ???
 			if ($row['haveamt'] == 0) { echo '<b>Has:</b> ??? '.$row['have'].'<br>'; }
 			else { echo '<b>Has:</b> '.$row['haveamt'].' '.$row['have'].'<br>'; }
-			if ($row['wantamt'] == 0) { echo '<b>Wants:</b> ??? '.$row['want'].'<br>'; }
-			else { echo '<b>Wants:</b> '.$row['wantamt'].' '.$row['want'].'<br>'; }
+			if ($row['wantamt'] == 0) { echo $aucVal.' ??? '.$row['want'].'<br>'; }
+			else { echo $aucVal.' '.$row['wantamt'].' '.$row['want'].'<br>'; }
 			
 			//Echo out location and notes
 			echo '<b>Location:</b> '.$row['location'].'<br>';
 			//echo '<b>Location:</b><br>
 			echo '<b>Notes:</b> '.$row['notes'].'<br>';
+			//Auction info
+			if ($row['aucinc'] !== null) {
+				//echo '<b>Minimum increase:</b> '.$row['aucinc'].'<br>';
+				if ($posterInfo[$row["lastbidder"]] == 'n') { $bidderUnv = " - <b>Unverified</b>"; }
+				else { $bidderUnv = ' - Verified'; }
+				echo '<b>Last bidder:</b> '.$row['lastbidder'].$bidderUnv.'<br>';
+			}
 			
 			//Link directly to the post
 			
@@ -175,10 +193,12 @@
 			
 			//If they're logged in...
 			if (isset($_COOKIE['user'])) {
+				//If auction, increase last bid
+				if ($row['aucinc'] !== null and $row['poster'] != $_COOKIE['user'] and $row['lastbidder'] != $_COOKIE['user']) { echo '<a button type="button" class="btn btn-primary" href="http://'.$url.'/actions/incAuc.php?id='.$row['offerid'].'">Increase bid by '.$row['aucinc'].' '.$row['want'].'</a> '; }
 				//Send PM
-				if ($row['poster'] != $_COOKIE['user']) { echo ' <a href="./actions/pm.php?postID='.$row['offerid'].'&to='.$row['poster'].'"><button type="button" class="btn btn-primary">Send user a PM</button></a> '; }
+				//if ($row['poster'] != $_COOKIE['user']) { echo ' <a href="./actions/pm.php?postID='.$row['offerid'].'&to='.$row['poster'].'"><button type="button" class="btn btn-primary">Send user a PM</button></a> '; }
 				//If they ARE the poster, allow them to post directly to /r/civcraftexchange
-				else if ($directPost) { echo ' <a href="'.$redditPost.'" button type="button" class="btn btn-primary">Post to /r/CivcraftExchange</button></a> '; }
+				if ($directPost and $row['poster'] == $_COOKIE['user']) { echo ' <a href="'.$redditPost.'" button type="button" class="btn btn-primary">Post to /r/CivcraftExchange</button></a> '; }
 				//If they're an admin OR they're the poster, allow them to deactivate it
 				if (($level >= 2 or $_COOKIE['user'] == $row['poster']) and $row['active'] == 'y') {
 					echo '<a href="./actions/remove.php?type=mark&id='.$row['offerid'].'"><button type="button" class="btn btn-warning">Mark inactive</button></a> ';
