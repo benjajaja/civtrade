@@ -28,11 +28,13 @@ I added a new API. You still must be verified to use it (verification takes abou
 
 The new API is located at http://civtrade.com/api/userPosts.php. You need your API token to view it. An API token can be accesed at any time by logging in to the control panel and scrolling all the way down to the [API Information panel](http://i.imgur.com/0H3gNm1.png)
 
-This page returns a list of all users that have posted at least once, and their total posts. Currently, it returns:
+This page returns a list of all users that have posted at least once, and their total posts. For me, it returns:
 
-`[{"name":"dx_dt","amount":9},{"name":"minicl55","amount":4},{"name":"Higgenbottoms","amount":3},{"name":"GipsyKing","amount":2},{"name":"Darcour","amount":2},{"name":"dekecoy","amount":1},{"name":"wildman01","amount":1},{"name":"agentnola","amount":1},{"name":"iPublicFriendemy","amount":1},{"name":"NetherQuit","amount":1},{"name":"BlazinGoliath","amount":1},{"name":"72Volt","amount":1},{"name":"597","amount":1},{"name":"assassin_scooby","amount":1},{"name":"MonsieurWTF","amount":1},{"name":"comicguyben","amount":1},{"name":"cwdeathsword","amount":1},{"name":"IronicChef","amount":1},{"name":"TealNerd","amount":1},{"name":"sintralin","amount":1}]`
+`[{"name":"minicl55","amount":4}]`
 
-This API takes no argruemnts. 
+On the real page, however, it will return all usernames and their amounts.
+
+This command has an optional argument, user. If you append it to the URL as a GET parameter (http://civtrade.com/api/userPosts.php?token=token&user=user), it will ONLY return the amount of posts for that user. For example, if I were to put &user=minicl55, it would return `4`, nothing more.
 
 If you're getting the error `Invalid API token OR your account is not verified OR your API token has been suspended`, you have an invalid API token, your account isn't verified or your API token has been suspended. PM me on reddit if you have any troubles.
 
