@@ -1,5 +1,5 @@
 <?php
-    require ('/var/www/civbeta/other/req.php');
+    require ('/var/www/civ/other/req.php');
     if (!isset($_GET['user'])) {
         $query = "SELECT poster,COUNT(`poster`) AS totalPosts FROM offers GROUP BY poster ORDER BY totalPosts DESC";
         $result = mysqli_stmt_init($con);
