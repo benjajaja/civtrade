@@ -94,7 +94,9 @@ Auctions have a [slightly different button for the poster to post the highest bi
 
 **Txapu integration:**
 
-/u/the_gipsy has updated 
+/u/the_gipsy has updated [txapu](http://txapu.com) to link to CivTrade whenever a city has an offer avaible. If there is no offer avaible, it looks like [this](https://i.imgur.com/sjJ4Ipe.png). If there is an offer, it looks like [this](http://i.imgur.com/6WI6dRV.png). Clicking the link will bring you to a CivTrade search for only that city. For example, [this](http://civtrade.com/?want=&have=&loc=orion) is the page for Orion.
+
+This is an amazing example of people using the API, if anyone else needs one created I'm happy to do so, just let me know.
 
 ----
 
