@@ -92,6 +92,12 @@ Auctions have a [slightly different button for the poster to post the highest bi
 
 ----
 
+**Txapu integration:**
+
+/u/the_gipsy has updated 
+
+----
+
 **New semi-important stuff:**
 
 - Added settings
