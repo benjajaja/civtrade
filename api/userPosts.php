@@ -1,5 +1,5 @@
 <?php
-    require ('/var/www/civbeta/other/req.php');
+    require ('/var/www/civ/other/req.php');
     if (!isset($_GET['user'])) {
         $query = "SELECT poster,COUNT(`poster`) AS totalPosts FROM offers GROUP BY poster ORDER BY totalPosts DESC";
         $result = mysqli_stmt_init($con);
@@ -20,7 +20,9 @@
         $stmt->prepare($query);
         $stmt->bind_param('s', $_GET['user']);
         $stmt->execute();
-        $result = mysqli_fetch_row($stmt->get_result());
-        echo $result[0];
+        $res = $stmt->get_result();
+        $result = mysqli_fetch_row($res);
+        if (mysqli_num_rows($res) == 0) { echo 'Invalid user'; }
+        else { echo $result[0]; }
     }
 ?>

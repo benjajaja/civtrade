@@ -40,8 +40,8 @@ if ($_GET['type'] == 'login')
     $resultID = mysqli_fetch_row($stmt->get_result());
     if (password_verify($_POST['pass'], $result[0]))
     {
-        setcookie("user", $_POST['user'], time()+86400, "/", $url);
-        setcookie("userID", $resultID[0], time()+86400, "/", $url);
+        setcookie("user", $_POST['user'], time()+86400, "/", $url, null, true);
+        setcookie("userID", $resultID[0], time()+86400, "/", $url, null, true);
         if ($logSignupIP) {
             $query = "UPDATE users SET lastip = ?, lastlogin = NOW() WHERE name = ?";
             $stmt = mysqli_stmt_init($con);
@@ -59,7 +59,7 @@ if ($_GET['type'] == 'login')
 //Signup part
 
 else if ($_GET['type'] == 'signup') {
-	if (strlen($_POST['pass']) >= 8 and ($_POST['pass'] == $_POST['passConfirm'])) {
+	if ((strlen($_POST['pass']) >= 8) and (strlen(strip_tags($_POST['user'])) != 0) and ($_POST['pass'] == $_POST['passConfirm'])) {
         //Remove HTML tags from username
         $_POST['user'] = strip_tags($_POST['user']);
         //Check if exists
@@ -83,13 +83,13 @@ else if ($_GET['type'] == 'signup') {
 			$newPass = password_hash($_POST['pass'], PASSWORD_DEFAULT);
             $stmt->bind_param('ssss', $_POST['user'], $newPass, $_SERVER['REMOTE_ADDR'], $_SERVER['REMOTE_ADDR']);
             $stmt->execute();
-            setcookie("user", $_POST['user'], time()+86400, "/", $url);
-            setcookie("userID", $rnd, time()+86400, "/", $url);
+            setcookie("user", $_POST['user'], time()+86400, "/", $url, null, true);
+            setcookie("userID", $rnd, time()+86400, "/", $url, null, true);
             errorOut("Successfully logged in", "success", "/control");
         }
 	}
 	else {
-		errorOut("Your password must be at least 8 characters long", "danger", "/control/login.php");
+		errorOut("Your passwords must match and be at least 8 characters long", "danger", "/control/login.php");
 	}
 }
 
@@ -113,7 +113,7 @@ else if ($_GET['type'] == 'changepw') {
 			$stmt->prepare($query);
 			$stmt->bind_param('ss', $rnd, $_COOKIE['user']);
 			$stmt->execute();
-            setcookie("userID", $rnd, time()+86400, "/", $url);
+            setcookie("userID", $rnd, time()+86400, "/", $url, null, true);
             errorOut("Successfully updated your password!", "success", "/control");
         }
         else {
@@ -121,15 +121,15 @@ else if ($_GET['type'] == 'changepw') {
         }
     }
     else {
-        errorOut("Your password must be at least 8 characters long", "danger", "/control");
+        errorOut("Your new password must be at least 8 characters long", "danger", "/control");
     }
 }
 
 //Logout part
 
 else if ($_GET['type'] == 'logout') {
-    setcookie("user", "", time()-360000, "/", $url);
-    setcookie("userID", "", time()-3600000, "/", $url);
+    setcookie("user", "", time()-360000, "/", $url, null, true);
+    setcookie("userID", "", time()-3600000, "/", $url, null, true);
     unset($_COOKIE['user']);
     unset($_COOKIE['userID']);
     errorOut("Succesfully logged out", "success");

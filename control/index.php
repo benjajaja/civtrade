@@ -22,27 +22,54 @@ if ($userInfo['verified'] == 'n') {
     </div>';
 }
 
+//Edit post
+if (isset($_GET['edit'])) {
+    //Check if editing is allowed
+    if (!$allowEdit) { errorOut("Editing is disabled", "danger", "/control"); }
+    else {
+        //Execute query
+        $query = "SELECT * FROM offers WHERE offerid=?";
+        $stmt = mysqli_stmt_init($con);
+        $stmt->prepare($query);
+        $stmt->bind_param('i', $_GET['pid']);
+        $stmt->execute();
+        $row=mysqli_fetch_assoc($stmt->get_result());
+        
+        //Check if they're allowed to edit this post
+        if (strlen($row['lastbidder']) != 0) { errorOut("You cannot edit an auction", "danger"); }
+        else if ($row['poster'] != $u and $level != 3) { errorOut("You can only edit your own posts", "danger"); }
+        
+        //Set values
+        else { $valHave = $row['have']; $amtHave = $row['haveamt']; $amtWant = $row['wantamt']; $valWant = $row['want']; $valLoc = $row['location']; $valNotes = $row['notes']; $out = "../actions/editpost.php?pid=".$_GET['pid']; }
+    }
+}
+else {
+    //Set empty values
+	$valHave = ''; $amtHave = ''; $amtWant = ''; $valWant = ''; $valLoc = ''; $valNotes = ''; $out = "../actions/submitlisting.php";
+}
+
 //New post
 echo '<div class="panelControl panel-primary">
 <div class="panel-heading"><font size="5">Create new post</font></div>';
 //Echo inputs
-echo '<div class="panel-body"><form method="POST" class="form-inline;" action="../actions/submitlisting.php"> <div class="form-group">
-    <b>I have...</b> <div class="form-group"><input type="number" class="form-control" name="amountHave" placeholder="Amount - If you don\'t know the amount, just enter 0 and it will be replaced with \'???\' (not auctions)"></div> 
-	<div class="form-group"><input type="text" class="form-control" name="have" placeholder="Item name"></div>
-	<b>I want...</b> <div class="form-group"><input type="number" class="form-control" name="amountWant" placeholder="Amount - If you don\'t know the amount, just enter 0 and it will be replaced with \'???\' (not auctions). If auction, this is the starting value."></div> 
-	<div class="form-group"><input type="text" class="form-control" name="want" placeholder="Item name"></div>
-	<b>I live in (do not abbreviate)...</b> <div class="form-group"><input type="text" class="form-control" name="loc" placeholder="Nearest city';
-    if ($cityCheckType == "force") { echo ' - Must match a city on Txapu.'; }
+echo '<div class="panel-body"><form method="POST" class="form-inline;" action="'.$out.'"> <div class="form-group">
+    <b>I have...</b> <div class="form-group"><input value="'.$amtHave.'" type="number" class="form-control" name="amountHave" placeholder="Amount - If you don\'t know the amount, just enter 0 and it will be replaced with \'???\' (not auctions)"></div> 
+	<div class="form-group"><input value="'.$valHave.'" type="text" class="form-control" name="have" placeholder="Item name"></div>
+	<b>I want...</b> <div class="form-group"><input value="'.$amtWant.'" type="number" class="form-control" name="amountWant" placeholder="Amount - If you don\'t know the amount, just enter 0 and it will be replaced with \'???\' (not auctions). If auction, this is the starting value."></div> 
+	<div class="form-group"><input type="text" value="'.$valWant.'" class="form-control" name="want" placeholder="Item name"></div>
+	<b>I live in (do not abbreviate)...</b> <div class="form-group"><input value="'.$valLoc.'" type="text" class="form-control" name="loc" placeholder="Nearest city';
+    if ($cityCheckType == "force") { echo ' - Must match a city on Txapu.'; } //Warn if the city type is forced
     echo '"></div>
-	<b>Notes (optional)...</b> <div class="form-group"><input type="text" class="form-control" name="notes" placeholder="PM me on reddit to discuss, I\'m /u/'.$_COOKIE['user'].'."></div> 
-	<button type="submit" class="btn btn-primary">Submit</button>
-	<br><br>
-	<b>Or, make this an auction</b>
-    <br><br>
-	
-	<b>Minimum increase...</b> <div class="form-group"><input type="number" class="form-control" name="mininc" placeholder="Amount"></div> 
-	<button type="submit" class="btn btn-primary">Create auction</button></div></div></div>
-	</form>';
+	<b>Notes (optional)...</b> <div class="form-group"><input value="'.$valNotes.'" type="text" class="form-control" name="notes" placeholder="PM me on reddit to discuss, I\'m /u/'.$_COOKIE['user'].'."></div>';
+	//Auction (which can only show if not editing because you can't edit auctions)
+    if (!isset($_GET['edit'])) { 
+		echo '<button type="submit" class="btn btn-primary">Submit</button><br><br>
+        <b>Or, make this an auction! Minimum increase...</b> <div class="form-group"><input type="number" class="form-control" name="mininc" placeholder="Amount"></div>
+        <button type="submit" class="btn btn-primary">Create auction</button>'; 
+    }
+    //Edit post button
+	else { echo '<button type="submit" class="btn btn-primary">Edit post</button>'; }
+	echo '</div></div></div></form>';
     
 //Get checked values
 if ($userInfo['closed'] == 1) { $closed = 'checked'; } else { $closed = ''; }
